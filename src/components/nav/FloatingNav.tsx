@@ -13,7 +13,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Contact", shortLabel: "04", path: "/contacts", icon: Mail },
 ];
 
-function Magnetic({ children }: { children: ReactNode }) {
+export function Magnetic({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
