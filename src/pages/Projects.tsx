@@ -6,8 +6,10 @@ import { projects } from "@/data/projects";
 export default function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isCompact, setIsCompact] = useState(false);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [travel, setTravel] = useState(0);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-78%"]);
+  const x = useTransform(scrollYProgress, [0, 1], [0, -travel]);
   const progress = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
   useEffect(() => {
@@ -16,6 +18,21 @@ export default function Projects() {
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
+
+  useEffect(() => {
+    const updateTravel = () => {
+      if (!trackRef.current) return;
+      setTravel(Math.max(0, trackRef.current.scrollWidth - window.innerWidth + 96));
+    };
+    updateTravel();
+    const observer = new ResizeObserver(updateTravel);
+    if (trackRef.current) observer.observe(trackRef.current);
+    window.addEventListener("resize", updateTravel);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateTravel);
+    };
+  }, [isCompact]);
 
   useMotionValueEvent(scrollYProgress, "change", () => undefined);
 
@@ -40,7 +57,7 @@ export default function Projects() {
           <div><p className="eyebrow">02 / Selected work</p><h2 className="mt-3 font-sometimesTimes text-6xl tracking-tight">Projects</h2></div>
           <p className="max-w-xs text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.16em] text-muted-foreground">Scroll down to move through the archive from left to right.</p>
         </div>
-        <motion.div style={{ x }} className="flex w-max items-center gap-10 py-10">
+        <motion.div ref={trackRef} style={{ x }} className="flex w-max items-center gap-10 py-10 pl-1 pr-24">
           {projects.map((item, index) => (
             <motion.div key={item.id} className="w-[min(68vw,720px)] shrink-0" style={{ opacity: useTransform(scrollYProgress, [index / projects.length, Math.min((index + 1) / projects.length, 1)], [0.45, 1]) }}>
               <div className="mb-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground"><span>0{index + 1}</span><span>{item.tech.join(" / ")}</span></div>

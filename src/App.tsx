@@ -6,6 +6,7 @@ import { FloatingNav } from "@/components/nav/FloatingNav";
 import { MobileDock } from "@/components/nav/MobileDock";
 import TerminalWindow from "@/components/TerminalWindow";
 import PortfolioCanvas from "@/components/PortfolioCanvas";
+import { SmoothScroll } from "@/components/SmoothScroll";
 
 const App: React.FC = () => {
   const [isTerminalVisible, setIsTerminalVisible] = useState(false);
@@ -15,6 +16,7 @@ const App: React.FC = () => {
   return (
   <Router>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <SmoothScroll>
       <div className="grain relative min-h-svh w-full overflow-hidden bg-background">
         <FloatingNav onTerminal={() => setIsTerminalVisible(true)} />
         <MobileDock />
@@ -30,6 +32,7 @@ const App: React.FC = () => {
         </main>
         <Toaster />
       </div>
+      </SmoothScroll>
     </ThemeProvider>
   </Router>
   );

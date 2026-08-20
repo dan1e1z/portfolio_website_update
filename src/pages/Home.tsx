@@ -7,9 +7,9 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.88]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.72], [1, 0.9]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.58, 0.9], [1, 0.78, 0]);
+  const heroY = useTransform(scrollYProgress, [0, 0.9], [0, -72]);
 
   return (
     <div className="w-full bg-background">
