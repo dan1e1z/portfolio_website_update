@@ -65,7 +65,7 @@ export default function Projects() {
           <div className="mb-12 flex flex-col gap-6 border-b border-foreground/15 pb-7 md:mb-0 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="eyebrow">02 / Selected work</p>
-              <h2 className="mt-4 max-w-3xl font-sometimesTimes text-5xl leading-[0.9] tracking-tight text-foreground sm:text-7xl md:text-8xl">Redefining limits through digital work.</h2>
+              <h2 className="mt-4 max-w-3xl font-neueMontreal text-5xl font-medium leading-[0.86] tracking-[-0.045em] text-foreground sm:text-7xl md:text-8xl">Redefining limits through digital work.</h2>
             </div>
             <p className="max-w-xs font-mono text-[10px] uppercase leading-relaxed tracking-[0.16em] text-muted-foreground">A living archive of products, platforms, and experiments built with intent.</p>
           </div>
@@ -98,7 +98,7 @@ export default function Projects() {
         )}
 
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between border-t border-foreground/15 pt-5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-          <span>{isDesktop ? "Scroll to move through the archive" : "Scroll to continue through the archive"}</span>
+          <span className="text-accent">{isDesktop ? "Scroll to move through the archive" : "Scroll to continue through the archive"}</span>
           {isDesktop && <span>{Math.round(progress).toString().padStart(2, "0")}%</span>}
         </div>
       </div>
