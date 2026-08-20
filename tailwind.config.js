@@ -65,6 +65,7 @@ export default {
       },
       fontFamily: {
         neueMontreal: ["NeueMontreal", "sans-serif"], // Add your custom font
+        mono: ["JetBrains Mono", "Space Mono", "monospace"],
         sometimesTimes: ["Sometimes Times", "serif"],
       },
       keyframes: {

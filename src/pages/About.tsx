@@ -20,7 +20,7 @@ const About: React.FC = () => {
 
   return (
     <ScrollArea
-      className="h-full w-full bg-[#1d1915] md:rounded-2xl"
+      className="h-full w-full bg-[#1d1915] pt-24 md:pt-28"
       viewportRef={containerRef}
     >
       <Suspense fallback={<LoadingSpinner />}>

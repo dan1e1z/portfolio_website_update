@@ -78,25 +78,35 @@ const useContainerDimensions = (
 
   useEffect(() => {
     const updateDimensions = () => {
-      if (containerRef.current) {
-        setDimensions({
-          width: containerRef.current.clientWidth,
-          height: containerRef.current.clientHeight,
-        });
-      }
+      if (!containerRef.current) return;
+
+      const nextDimensions = {
+        width: Math.round(containerRef.current.clientWidth),
+        height: Math.round(containerRef.current.clientHeight),
+      };
+
+      setDimensions((previous) =>
+        previous.width === nextDimensions.width &&
+        previous.height === nextDimensions.height
+          ? previous
+          : nextDimensions,
+      );
     };
 
     updateDimensions();
-    const observer = new ResizeObserver(updateDimensions);
+    let frame = 0;
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(updateDimensions);
+    });
 
     if (containerRef.current) {
       observer.observe(containerRef.current);
     }
 
     return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
-      }
+      observer.disconnect();
+      cancelAnimationFrame(frame);
     };
   }, [containerRef]);
 

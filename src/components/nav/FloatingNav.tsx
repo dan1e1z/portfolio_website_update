@@ -1,0 +1,78 @@
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { Briefcase, Home, Layers, Mail, User } from "lucide-react";
+import { cn } from "@/lib/utils";
+import type { NavItem } from "@/types/navigation";
+
+const NAV_ITEMS: NavItem[] = [
+  { label: "Home", shortLabel: "00", path: "/", icon: Home },
+  { label: "About", shortLabel: "01", path: "/about", icon: User },
+  { label: "Projects", shortLabel: "02", path: "/projects", icon: Briefcase },
+  { label: "Skills", shortLabel: "03", path: "/skills", icon: Layers },
+  { label: "Contact", shortLabel: "04", path: "/contacts", icon: Mail },
+];
+
+function Magnetic({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const springX = useSpring(x, { stiffness: 150, damping: 15, mass: 0.1 });
+  const springY = useSpring(y, { stiffness: 150, damping: 15, mass: 0.1 });
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={(event) => {
+        const rect = ref.current?.getBoundingClientRect();
+        if (!rect) return;
+        x.set((event.clientX - rect.left - rect.width / 2) * 0.35);
+        y.set((event.clientY - rect.top - rect.height / 2) * 0.35);
+      }}
+      onMouseLeave={() => { x.set(0); y.set(0); }}
+      style={{ x: springX, y: springY }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function FloatingNav() {
+  const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
+  const [hoveredPath, setHoveredPath] = useState<string | null>(null);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const activePath = hoveredPath ?? NAV_ITEMS.find((item) => item.path === location.pathname)?.path ?? "/";
+
+  return (
+    <motion.nav
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ type: "spring", stiffness: 260, damping: 26, delay: 0.15 }}
+      className="fixed left-1/2 top-6 z-[100] hidden -translate-x-1/2 md:block"
+      aria-label="Primary navigation"
+    >
+      <div className={cn("flex items-center gap-1 rounded-full border border-[#eee9cc]/10 px-2 py-2 backdrop-blur-xl transition-all duration-500", scrolled ? "bg-[#1c1915]/70 shadow-[0_8px_32px_rgba(0,0,0,0.4)]" : "bg-[#1c1915]/30")} onMouseLeave={() => setHoveredPath(null)}>
+        {NAV_ITEMS.map((item) => {
+          const active = item.path === activePath;
+          return (
+            <Magnetic key={item.path}>
+              <Link to={item.path} onMouseEnter={() => setHoveredPath(item.path)} aria-current={active ? "page" : undefined} className="relative flex select-none items-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium">
+                {active && <motion.div layoutId="nav-pill" className="absolute inset-0 rounded-full bg-[#eee9cc]" transition={{ type: "spring", stiffness: 350, damping: 30 }} />}
+                <span className={cn("relative z-10 font-mono text-[10px] tracking-widest transition-colors duration-300", active ? "text-[#1c1915]/50" : "text-[#eee9cc]/40")}>{item.shortLabel}</span>
+                <span className={cn("relative z-10 tracking-tight transition-colors duration-300", active ? "text-[#1c1915]" : "text-[#eee9cc]/80")}>{item.label}</span>
+              </Link>
+            </Magnetic>
+          );
+        })}
+      </div>
+    </motion.nav>
+  );
+}

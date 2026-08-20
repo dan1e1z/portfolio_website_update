@@ -11,13 +11,20 @@ const useContainerDimensions = (
   const [dimensions, setDimensions] = useState<Dimensions | null>(null);
 
   const measure = useCallback(() => {
-    if (ref.current) {
-      const rect = ref.current.getBoundingClientRect();
-      setDimensions({
-        width: rect.width,
-        height: rect.height,
-      });
-    }
+    if (!ref.current) return;
+
+    const rect = ref.current.getBoundingClientRect();
+    const nextDimensions = {
+      width: Math.round(rect.width),
+      height: Math.round(rect.height),
+    };
+
+    setDimensions((previous) =>
+      previous?.width === nextDimensions.width &&
+      previous.height === nextDimensions.height
+        ? previous
+        : nextDimensions,
+    );
   }, [ref]);
 
   useEffect(() => {

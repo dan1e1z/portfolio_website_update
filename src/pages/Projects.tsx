@@ -33,7 +33,7 @@ export default function Projects() {
       className="h-[90dvh] md:h-screen overflow-hidden relative"
     >
       <ScrollArea
-        className="bg-[#1c1915] md:rounded-2xl h-full"
+        className="h-full bg-[#1c1915] pt-24 md:pt-28"
         viewportRef={scrollRef}
       >
         <div className="sticky top-0 z-10 shadow-md p-4 bg-[#1c1915]/60 backdrop-blur-2xl rounded-lg">

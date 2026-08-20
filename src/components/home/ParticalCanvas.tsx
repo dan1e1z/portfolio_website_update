@@ -262,18 +262,30 @@ const ParticleCanvas: React.FC<ParticleCanvasProps> = ({ containerRef }) => {
     animate();
     controls.start({ opacity: 1 });
 
+    let resizeFrame = 0;
+    let lastWidth = canvas.width;
+    let lastHeight = canvas.height;
+
     const resizeObserver = new ResizeObserver(() => {
-      const { width, height } = updateCanvasSize();
-      effect.width = width;
-      effect.height = height;
-      effect.particlesArray = [];
-      effect.init();
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(() => {
+        const { width, height } = updateCanvasSize();
+        if (width === lastWidth && height === lastHeight) return;
+
+        lastWidth = width;
+        lastHeight = height;
+        effect.width = width;
+        effect.height = height;
+        effect.particlesArray = [];
+        effect.init();
+      });
     });
 
     resizeObserver.observe(containerRef.current);
 
     return () => {
       resizeObserver.disconnect();
+      cancelAnimationFrame(resizeFrame);
       effect.removeEventListeners();
     };
   }, [containerRef, controls]);
