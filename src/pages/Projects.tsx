@@ -11,6 +11,7 @@ export default function Projects() {
   const [isDesktop, setIsDesktop] = useState(false);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
   const x = useTransform(scrollYProgress, [0, 1], [0, -travel]);
+  const railY = useTransform(scrollYProgress, [0, 1], [48, -48]);
 
   useEffect(() => {
     const media = window.matchMedia("(min-width: 768px)");
@@ -53,7 +54,9 @@ export default function Projects() {
 
   useMotionValueEvent(scrollYProgress, "change", (value) => setProgress(value * 100));
 
-  const sectionHeight = isDesktop ? Math.max(1, travel + (typeof window !== "undefined" ? window.innerHeight : 0)) : undefined;
+  const sectionHeight = isDesktop
+    ? Math.max(1, travel + (typeof window !== "undefined" ? window.innerHeight : 0) + 160)
+    : undefined;
 
   return (
     <section ref={sectionRef} id="projects" className="relative w-full bg-background" style={sectionHeight ? { height: sectionHeight } : undefined}>
@@ -70,9 +73,9 @@ export default function Projects() {
 
         {isDesktop ? (
           <div className="relative -mx-12 flex min-h-0 flex-1 items-center overflow-hidden px-12">
-            <motion.div ref={trackRef} style={{ x }} className="flex w-max items-center gap-10 py-10 pl-1 pr-[calc(100vw-6rem)] will-change-transform">
+            <motion.div ref={trackRef} style={{ x, y: railY }} className="flex w-max items-center gap-10 py-10 pl-1 pr-[calc(100vw-6rem)] will-change-transform">
               {projects.map((item, index) => (
-                <div key={item.id} className={`w-[min(62vw,720px)] shrink-0 ${index % 2 === 0 ? "translate-y-4" : "-translate-y-4"}`}>
+                <div key={item.id} className={`w-[min(62vw,720px)] shrink-0 ${index % 2 === 0 ? "translate-y-8" : "-translate-y-8"}`}>
                   <div className="mb-4 flex items-center justify-between border-t border-foreground/15 pt-3 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
                     <span>0{index + 1} / {item.title}</span><span>{item.tech[0]}</span>
                   </div>
