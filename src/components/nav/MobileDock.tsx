@@ -15,8 +15,9 @@ const NAV_ITEMS: NavItem[] = [
 export function MobileDock() {
   const location = useLocation();
   return (
-    <motion.nav initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ type: "spring", stiffness: 260, damping: 26, delay: 0.2 }} className="fixed bottom-4 left-1/2 z-[100] -translate-x-1/2 md:hidden" aria-label="Primary navigation">
-      <div className="flex items-center gap-0.5 rounded-full border border-[#eee9cc]/10 bg-[#1c1915]/80 px-1.5 py-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+    <div className="fixed inset-x-0 bottom-4 z-[100] flex justify-center px-3 md:hidden">
+      <motion.nav initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ type: "spring", stiffness: 260, damping: 26, delay: 0.2 }} className="max-w-full" aria-label="Primary navigation">
+        <div className="flex max-w-full items-center gap-0.5 rounded-full border border-[#eee9cc]/10 bg-[#1c1915]/80 px-1.5 py-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-xl">
         {NAV_ITEMS.map((item) => {
           const active = location.pathname === item.path;
           const Icon = item.icon;
@@ -28,7 +29,8 @@ export function MobileDock() {
             </Link>
           );
         })}
-      </div>
-    </motion.nav>
+        </div>
+      </motion.nav>
+    </div>
   );
 }

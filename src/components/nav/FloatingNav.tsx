@@ -52,14 +52,15 @@ export function FloatingNav() {
   const activePath = hoveredPath ?? NAV_ITEMS.find((item) => item.path === location.pathname)?.path ?? "/";
 
   return (
-    <motion.nav
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ type: "spring", stiffness: 260, damping: 26, delay: 0.15 }}
-      className="fixed left-1/2 top-6 z-[100] hidden -translate-x-1/2 md:block"
-      aria-label="Primary navigation"
-    >
-      <div className={cn("flex items-center gap-1 rounded-full border border-[#eee9cc]/10 px-2 py-2 backdrop-blur-xl transition-all duration-500", scrolled ? "bg-[#1c1915]/70 shadow-[0_8px_32px_rgba(0,0,0,0.4)]" : "bg-[#1c1915]/30")} onMouseLeave={() => setHoveredPath(null)}>
+    <div className="fixed inset-x-0 top-6 z-[100] hidden justify-center px-4 md:flex">
+      <motion.nav
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 260, damping: 26, delay: 0.15 }}
+        className={cn("flex max-w-full items-center gap-1 rounded-full border border-[#eee9cc]/10 px-2 py-2 backdrop-blur-xl transition-all duration-500", scrolled ? "bg-[#1c1915]/70 shadow-[0_8px_32px_rgba(0,0,0,0.4)]" : "bg-[#1c1915]/30")}
+        aria-label="Primary navigation"
+        onMouseLeave={() => setHoveredPath(null)}
+      >
         {NAV_ITEMS.map((item) => {
           const active = item.path === activePath;
           return (
@@ -72,7 +73,7 @@ export function FloatingNav() {
             </Magnetic>
           );
         })}
-      </div>
-    </motion.nav>
+      </motion.nav>
+    </div>
   );
 }
