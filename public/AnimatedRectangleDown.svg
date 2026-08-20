@@ -1,0 +1,30 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" transform="scale(1, -1)">
+  <g>
+    <rect 
+      class="animated-shape" 
+      x="0" y="176" 
+      width="252" 
+      height="76" 
+      rx="0" />
+  </g>
+  <style>
+    .animated-shape {
+      animation: shape-animation 6s ease-in-out infinite;
+    }
+
+    @keyframes shape-animation {
+      0%, 100% {
+        height: 76px;
+        y: 176px;
+      }
+      33% {
+        height: 0;
+        y: 252px;
+      }
+      66% {
+        height: 252px;
+        y: 0;
+      }
+    }
+  </style>
+</svg>
