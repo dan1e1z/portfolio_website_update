@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import { Briefcase, Home, Layers, Mail, User } from "lucide-react";
+import { Briefcase, Home, Layers, Mail, Terminal, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { NavItem } from "@/types/navigation";
 
@@ -37,7 +37,7 @@ export function Magnetic({ children }: { children: ReactNode }) {
   );
 }
 
-export function FloatingNav() {
+export function FloatingNav({ onTerminal }: { onTerminal: () => void }) {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
@@ -73,6 +73,12 @@ export function FloatingNav() {
             </Magnetic>
           );
         })}
+        <Magnetic>
+          <button type="button" onClick={onTerminal} aria-label="Open terminal" className="relative flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium text-[#eee9cc]/80 transition-colors hover:text-[#eee9cc]">
+            <Terminal className="size-4" aria-hidden="true" />
+            <span className="font-mono text-[10px] tracking-widest">CLI</span>
+          </button>
+        </Magnetic>
       </motion.nav>
     </div>
   );

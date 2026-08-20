@@ -22,8 +22,8 @@ const App: React.FC = () => {
   <Router>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="grain relative min-h-svh w-full overflow-hidden bg-[#1c1915]">
-        <FloatingNav />
-        <MobileDock onTerminal={() => setIsTerminalVisible(true)} />
+        <FloatingNav onTerminal={() => setIsTerminalVisible(true)} />
+        <MobileDock />
         {isTerminalVisible && (
           <div className="fixed inset-0 z-[120] flex items-center justify-center bg-[#1c1915]/75 p-4 backdrop-blur-md" onClick={() => setIsTerminalVisible(false)}>
             <div onClick={(event) => event.stopPropagation()}>
