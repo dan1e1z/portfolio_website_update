@@ -60,6 +60,7 @@ export function FloatingNav({ onTerminal }: { onTerminal: () => void }) {
             <Magnetic key={item.path}>
               <Link to={item.path} onMouseEnter={() => setHoveredPath(item.path)} aria-current={active ? "page" : undefined} className="relative flex select-none items-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium">
                 {active && <motion.div layoutId="nav-pill" className="absolute inset-0 rounded-full bg-[#eee9cc]" transition={{ type: "spring", stiffness: 350, damping: 30 }} />}
+                <span className={cn("relative z-10 font-mono text-[9px] tracking-widest transition-colors duration-300", active ? "text-[#1c1915]/55" : "text-[#eee9cc]/35")}>{item.shortLabel}</span>
                 <Icon className={cn("relative z-10 size-4 transition-colors duration-300", active ? "text-[#1c1915]" : "text-[#eee9cc]/40")} aria-hidden="true" />
                 <span className={cn("relative z-10 tracking-tight transition-colors duration-300", active ? "text-[#1c1915]" : "text-[#eee9cc]/80")}>{item.label}</span>
               </Link>
