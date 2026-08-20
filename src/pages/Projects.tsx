@@ -51,15 +51,15 @@ export default function Projects() {
   }
 
   return (
-    <section ref={sectionRef} className="relative h-[420vh] w-full bg-background">
-      <div className="sticky top-0 flex h-[calc(100svh-5rem)] flex-col justify-between overflow-hidden px-12 py-10">
+    <section ref={sectionRef} className="relative w-full bg-background" style={{ height: `calc(${Math.max(1, travel)}px + 100svh)` }}>
+      <div className="sticky top-0 flex h-[calc(100svh-5rem)] min-h-[640px] flex-col justify-between overflow-hidden px-12 py-10">
         <div className="flex items-end justify-between border-b border-foreground/15 pb-5">
           <div><p className="eyebrow">02 / Selected work</p><h2 className="mt-3 font-sometimesTimes text-6xl tracking-tight">Projects</h2></div>
           <p className="max-w-xs text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.16em] text-muted-foreground">Scroll down to move through the archive from left to right.</p>
         </div>
-        <motion.div ref={trackRef} style={{ x }} className="flex w-max items-center gap-10 py-10 pl-1 pr-24">
+        <motion.div ref={trackRef} style={{ x }} className="flex w-max items-center gap-10 py-10 pl-1 pr-[calc(100vw-6rem)]">
           {projects.map((item, index) => (
-            <motion.div key={item.id} className="w-[min(68vw,720px)] shrink-0" style={{ opacity: useTransform(scrollYProgress, [index / projects.length, Math.min((index + 1) / projects.length, 1)], [0.45, 1]) }}>
+            <motion.div key={item.id} className="flex w-[min(68vw,720px)] shrink-0 flex-col justify-center" style={{ opacity: useTransform(scrollYProgress, [index / projects.length, Math.min((index + 1) / projects.length, 1)], [0.45, 1]) }}>
               <div className="mb-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground"><span>0{index + 1}</span><span>{item.tech.join(" / ")}</span></div>
               <ProjectItem id={`project${item.id}`} title={item.title} img={item.img} desc={item.desc} link={item.link} tech={item.tech} />
             </motion.div>
