@@ -14,29 +14,46 @@ export default function Projects() {
 
   useEffect(() => {
     const media = window.matchMedia("(min-width: 768px)");
+    let observer: ResizeObserver | undefined;
+
     const measure = () => {
-      setIsDesktop(media.matches);
-      if (media.matches && trackRef.current) {
-        setTravel(Math.max(0, trackRef.current.scrollWidth - window.innerWidth + 96));
-      } else {
+      const desktop = media.matches;
+      setIsDesktop(desktop);
+      if (!desktop || !trackRef.current) {
         setTravel(0);
+        return;
       }
+
+      const trackWidth = trackRef.current.getBoundingClientRect().width;
+      const viewportWidth = document.documentElement.clientWidth;
+      setTravel(Math.max(0, trackWidth - viewportWidth + 96));
     };
-    measure();
-    const observer = new ResizeObserver(measure);
-    if (trackRef.current) observer.observe(trackRef.current);
+
+    const observeTrack = () => {
+      observer?.disconnect();
+      if (trackRef.current) {
+        observer = new ResizeObserver(measure);
+        observer.observe(trackRef.current);
+      }
+      measure();
+    };
+
+    setIsDesktop(media.matches);
+    const frame = window.requestAnimationFrame(observeTrack);
     window.addEventListener("resize", measure);
-    media.addEventListener("change", measure);
+    media.addEventListener("change", observeTrack);
+
     return () => {
-      observer.disconnect();
+      window.cancelAnimationFrame(frame);
+      observer?.disconnect();
       window.removeEventListener("resize", measure);
-      media.removeEventListener("change", measure);
+      media.removeEventListener("change", observeTrack);
     };
   }, []);
 
   useMotionValueEvent(scrollYProgress, "change", (value) => setProgress(value * 100));
 
-  const sectionHeight = isDesktop ? Math.max(1, travel + window.innerHeight) : undefined;
+  const sectionHeight = isDesktop ? Math.max(1, travel + (typeof window !== "undefined" ? window.innerHeight : 0)) : undefined;
 
   return (
     <section ref={sectionRef} id="projects" className="relative w-full bg-background" style={sectionHeight ? { height: sectionHeight } : undefined}>
