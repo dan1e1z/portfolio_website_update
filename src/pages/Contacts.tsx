@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import Arrow from "@/animations/Arrow";
 import { useRef, useMemo } from "react";
 import useContainerDimensions from "@/hooks/useContainerDimensions";
-import { RevealOnScroll } from "@/components/RevealOnScroll";
 
 const ContactPage = () => {
   const slideInVariants = {
@@ -53,7 +52,7 @@ const ContactPage = () => {
   const isColumnLayout = config.contentPosition === "flex flex-col gap-12";
 
   return (
-    <RevealOnScroll className="relative w-full bg-background">
+    <div className="relative w-full bg-background">
       <div className={`${config.contentPosition} p-6 relative`}>
         {/* Left Column - Contact Info */}
         <div className="flex flex-col gap-12 text-[#eee9cc] relative">
@@ -110,7 +109,7 @@ const ContactPage = () => {
           <ContactForm containerRef={containerRef} />
         </motion.div>
       </div>
-    </RevealOnScroll>
+    </div>
   );
 };
 

@@ -91,15 +91,15 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
     layoutEffect: false,
   });
 
-  const titleOpacity = useTransform(scrollYProgress, [0.04, 0.18], [0, 1]);
+  const titleOpacity = useTransform(scrollYProgress, [0.9, 0.95], [0, 1]);
 
-  const overlayOpacity = useTransform(scrollYProgress, [0.26, 0.54], [0, 0.5]);
+  const overlayOpacity = useTransform(scrollYProgress, [0.95, 1], [0, 0.5]);
 
   const squares = colors.map((color, index) => {
     const totalSquares = colors.length;
-    const stagger = 0.42 / totalSquares;
+    const stagger = 0.7 / totalSquares;
     const start = index * stagger;
-    const end = Math.min(start + stagger + 0.08, 0.72);
+    const end = Math.min(start + stagger + 0.1, 0.95);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const y = useTransform(scrollYProgress, [start, end], ["100vh", "0vh"], {
@@ -108,7 +108,7 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const opacity = useTransform(
       scrollYProgress,
-      [start, Math.min(start + 0.1, 0.72)],
+      [start, Math.min(start + 0.1, 0.95)],
       [0, 1],
       {
         clamp: true,
@@ -132,7 +132,7 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
   return (
     <>
       <div className="" id="about4">
-        <div ref={scrollRef} className="h-[180vh]">
+        <div ref={scrollRef} className="h-[300vh]">
           <div
             ref={gridRef}
             className="h-[90dvh] md:h-screen sticky top-0 grid place-items-center overflow-hidden"
@@ -155,8 +155,8 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
               className="absolute grid-area-[main] flex flex-col"
               initial={{ y: "100%", opacity: 0 }}
               style={{
-                y: useTransform(scrollYProgress, [0.12, 0.32], ["100%", "0%"]),
-                opacity: useTransform(scrollYProgress, [0.12, 0.32], [0, 1]),
+                y: useTransform(scrollYProgress, [0.4, 0.6], ["100%", "0%"]),
+                opacity: useTransform(scrollYProgress, [0.4, 0.6], [0, 1]),
               }}
             >
               <h2 className="text-[clamp(2rem,7vw,4.5rem)] leading-none mt-2 mb-0 font-medium tracking-tight">
@@ -185,7 +185,7 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
               {activities.map(({ activity, rowStart, colStart }, index) => (
                 <div
                   key={`activity-${index}`}
-                  className={`row-start-${rowStart} col-start-${colStart} flex cursor-default items-center justify-center text-[#eee9cc] ${config.textSize} uppercase tracking-[0.12em] mix-blend-exclusion transition-transform duration-500 hover:scale-110`}
+                  className={`row-start-${rowStart} col-start-${colStart} flex justify-center items-center text-[#eee9cc] ${config.textSize} uppercase mix-blend-exclusion`}
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                 >

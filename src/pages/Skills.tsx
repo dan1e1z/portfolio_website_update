@@ -2,7 +2,6 @@ import { useRef, lazy, Suspense } from "react";
 import { useScrollNavigation } from "@/hooks/useScrollNavigation";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { skillSection } from "@/data/skills";
-import { RevealOnScroll } from "@/components/RevealOnScroll";
 const SkillHero = lazy(() => import("@/components/skills/SkillHero"));
 const SkillContent = lazy(() => import("@/components/skills/SkillContent"));
 const SkillTransition = lazy(
@@ -14,7 +13,7 @@ const Skills = () => {
   useScrollNavigation(containerRef, skillSection, "skills");
 
   return (
-    <RevealOnScroll className="w-full bg-background">
+    <div className="w-full bg-background">
       <Suspense fallback={<LoadingSpinner />}>
         <SkillHero containerRef={containerRef} />
       </Suspense>
@@ -24,7 +23,7 @@ const Skills = () => {
       <Suspense fallback={<LoadingSpinner />}>
         <SkillContent containerRef={containerRef} />
       </Suspense>
-    </RevealOnScroll>
+    </div>
   );
 };
 
