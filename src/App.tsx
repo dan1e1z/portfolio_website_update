@@ -31,7 +31,7 @@ const App: React.FC = () => {
             </div>
           </div>
         )}
-        <main className="relative z-10 min-h-svh w-full">
+        <main className="relative z-10 h-svh w-full overflow-hidden md:pt-24">
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
               <Route path="/" element={<Home />} />

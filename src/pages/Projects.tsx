@@ -5,7 +5,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { ArrowUp } from "lucide-react";
 import { useScrollNavigation } from "@/hooks/useScrollNavigation";
-import { useEffect } from "react";
 
 export default function Projects() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -16,21 +15,11 @@ export default function Projects() {
     "project",
   );
 
-  useEffect(() => {
-    const adjustHeight = () => {
-      if (containerRef.current) {
-        containerRef.current.style.height = `${window.innerHeight}px`;
-      }
-    };
-    adjustHeight();
-    window.addEventListener("resize", adjustHeight);
-    return () => window.removeEventListener("resize", adjustHeight);
-  }, []);
 
   return (
     <div
       ref={containerRef}
-      className="h-[90dvh] md:h-screen overflow-hidden relative"
+      className="relative h-full min-h-0 overflow-hidden"
     >
       <ScrollArea
         className="h-full bg-[#1c1915]"
