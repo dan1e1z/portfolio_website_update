@@ -156,7 +156,7 @@ const HomeContent: React.FC<HomeContentProps> = ({ containerRef }) => {
   return (
     <div className="relative w-full h-full">
       <motion.div
-        className="w-full h-screen flex flex-col"
+        className="flex min-h-[calc(100svh-5rem)] w-full flex-col"
         initial={{ opacity: 0 }}
         animate={{ opacity: isGridVisible ? 1 : 0 }}
         transition={{ duration: 1 }}
