@@ -1,5 +1,4 @@
 import { useRef, lazy, Suspense } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { useScrollNavigation } from "@/hooks/useScrollNavigation";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { skillSection } from "@/data/skills";
@@ -14,10 +13,7 @@ const Skills = () => {
   useScrollNavigation(containerRef, skillSection, "skills");
 
   return (
-    <ScrollArea
-      viewportRef={containerRef}
-      className="h-full w-full bg-background"
-    >
+    <div className="w-full bg-background">
       <Suspense fallback={<LoadingSpinner />}>
         <SkillHero containerRef={containerRef} />
       </Suspense>
@@ -27,7 +23,7 @@ const Skills = () => {
       <Suspense fallback={<LoadingSpinner />}>
         <SkillContent containerRef={containerRef} />
       </Suspense>
-    </ScrollArea>
+    </div>
   );
 };
 

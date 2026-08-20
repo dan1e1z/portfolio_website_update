@@ -1,17 +1,11 @@
-import React, { lazy, Suspense, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { FloatingNav } from "@/components/nav/FloatingNav";
 import { MobileDock } from "@/components/nav/MobileDock";
-import { LoadingSpinner } from "@/components/LoadingSpinner";
 import TerminalWindow from "@/components/TerminalWindow";
-
-const Home = lazy(() => import("@/pages/Home"));
-const About = lazy(() => import("@/pages/About"));
-const Projects = lazy(() => import("@/pages/Projects"));
-const Contacts = lazy(() => import("@/pages/Contacts"));
-const Skills = lazy(() => import("@/pages/Skills"));
+import PortfolioCanvas from "@/components/PortfolioCanvas";
 
 const App: React.FC = () => {
   const [isTerminalVisible, setIsTerminalVisible] = useState(false);
@@ -31,16 +25,8 @@ const App: React.FC = () => {
             </div>
           </div>
         )}
-        <main className="relative z-10 box-border h-svh w-full overflow-hidden pb-20 md:pb-0 md:pt-20">
-          <Suspense fallback={<LoadingSpinner />}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/contacts" element={<Contacts />} />
-              <Route path="/skills" element={<Skills />} />
-            </Routes>
-          </Suspense>
+        <main className="relative z-10 w-full pb-20 md:pt-20">
+          <PortfolioCanvas />
         </main>
         <Toaster />
       </div>

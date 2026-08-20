@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { ProjectItem } from "@/components/ProjectItem";
 import { projects } from "@/data/projects";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { ArrowUp } from "lucide-react";
 import { useScrollNavigation } from "@/hooks/useScrollNavigation";
@@ -21,10 +20,7 @@ export default function Projects() {
       ref={containerRef}
       className="relative h-full min-h-0 overflow-hidden"
     >
-      <ScrollArea
-        className="h-full bg-background"
-        viewportRef={scrollRef}
-      >
+      <div className="bg-background">
         <div className="sticky top-0 z-10 shadow-md p-4 bg-background/60 backdrop-blur-2xl rounded-lg">
           <div className="w-full h-2 bg-background rounded-lg overflow-hidden">
             <div
@@ -46,7 +42,7 @@ export default function Projects() {
             />
           ))}
         </div>
-      </ScrollArea>
+      </div>
       <div className="absolute bottom-4 right-4 z-50">
         <Button
           onClick={() =>

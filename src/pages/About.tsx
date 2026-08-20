@@ -1,5 +1,4 @@
 import React, { useRef, lazy, Suspense } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 const AboutContent = lazy(() => import("@/components/about/AboutContent"));
 import EducationContent from "@/components/about/EducationContent";
 const HobbiesContent = lazy(() => import("@/components/about/HobbiesContent"));
@@ -19,10 +18,7 @@ const About: React.FC = () => {
   useScrollNavigation(containerRef, aboutSections, "about");
 
   return (
-    <ScrollArea
-      className="h-full w-full bg-background"
-      viewportRef={containerRef}
-    >
+    <div className="w-full bg-background">
       <Suspense fallback={<LoadingSpinner />}>
         <AboutHero containerRef={containerRef} />
       </Suspense>
@@ -41,7 +37,7 @@ const About: React.FC = () => {
           <HobbiesContent containerRef={containerRef} />
         </Suspense>
       </div>
-    </ScrollArea>
+    </div>
   );
 };
 

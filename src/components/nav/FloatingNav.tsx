@@ -1,16 +1,16 @@
 import { useRef, useState, type ReactNode } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { Briefcase, Home, Layers, Mail, Terminal, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { NavItem } from "@/types/navigation";
 
-const NAV_ITEMS: NavItem[] = [
-  { label: "Home", shortLabel: "00", path: "/", icon: Home },
-  { label: "About", shortLabel: "01", path: "/about", icon: User },
-  { label: "Projects", shortLabel: "02", path: "/projects", icon: Briefcase },
-  { label: "Skills", shortLabel: "03", path: "/skills", icon: Layers },
-  { label: "Contact", shortLabel: "04", path: "/contacts", icon: Mail },
+const NAV_ITEMS: (NavItem & { anchor: string })[] = [
+  { label: "Home", shortLabel: "00", path: "/", anchor: "home", icon: Home },
+  { label: "About", shortLabel: "01", path: "/about", anchor: "about", icon: User },
+  { label: "Work", shortLabel: "02", path: "/projects", anchor: "projects", icon: Briefcase },
+  { label: "Skills", shortLabel: "03", path: "/skills", anchor: "skills", icon: Layers },
+  { label: "Contact", shortLabel: "04", path: "/contacts", anchor: "contacts", icon: Mail },
 ];
 
 export function Magnetic({ children }: { children: ReactNode }) {
@@ -41,7 +41,7 @@ export function FloatingNav({ onTerminal }: { onTerminal: () => void }) {
   const location = useLocation();
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
 
-  const activePath = hoveredPath ?? NAV_ITEMS.find((item) => item.path === location.pathname)?.path ?? "/";
+  const activePath = hoveredPath ?? NAV_ITEMS.find((item) => item.anchor === location.hash.slice(1))?.anchor ?? "home";
 
   return (
     <div className="fixed inset-x-0 top-6 z-[100] hidden justify-center px-4 md:flex">
@@ -54,16 +54,16 @@ export function FloatingNav({ onTerminal }: { onTerminal: () => void }) {
         onMouseLeave={() => setHoveredPath(null)}
       >
         {NAV_ITEMS.map((item) => {
-          const active = item.path === activePath;
+          const active = item.anchor === activePath;
           const Icon = item.icon;
           return (
             <Magnetic key={item.path}>
-              <Link to={item.path} onMouseEnter={() => setHoveredPath(item.path)} aria-current={active ? "page" : undefined} className="relative flex select-none items-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium">
+              <a href={`#${item.anchor}`} onMouseEnter={() => setHoveredPath(item.anchor)} aria-current={active ? "page" : undefined} className="relative flex select-none items-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium">
                 {active && <motion.div layoutId="nav-pill" className="absolute inset-0 rounded-full bg-primary" transition={{ type: "spring", stiffness: 350, damping: 30 }} />}
                 <span className={cn("relative z-10 font-mono text-[9px] tracking-widest transition-colors duration-300", active ? "text-primary-foreground/55" : "text-foreground/35")}>{item.shortLabel}</span>
                 <Icon className={cn("relative z-10 size-4 transition-colors duration-300", active ? "text-primary-foreground" : "text-foreground/40")} aria-hidden="true" />
                 <span className={cn("relative z-10 tracking-tight transition-colors duration-300", active ? "text-primary-foreground" : "text-foreground/80")}>{item.label}</span>
-              </Link>
+              </a>
             </Magnetic>
           );
         })}

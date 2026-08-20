@@ -1,16 +1,12 @@
 import { useRef } from "react";
 import ParticleCanvas from "@/components/home/ParticalCanvas";
 import HomeContent from "@/components/home/HomeContent";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <ScrollArea
-      viewportRef={containerRef}
-      className="h-full w-full bg-background"
-    >
+    <div className="w-full bg-background">
       <section className="relative flex min-h-[calc(100svh-5rem)] w-full snap-start items-end overflow-hidden px-6 pb-12 md:px-12 md:pb-16">
         <ParticleCanvas containerRef={containerRef} />
         <div className="relative z-10 flex w-full items-end justify-between gap-8 border-t border-foreground/20 pt-6">
@@ -24,6 +20,6 @@ export default function Home() {
       <section className="min-h-[calc(100svh-5rem)] w-full snap-start">
         <HomeContent containerRef={containerRef} />
       </section>
-    </ScrollArea>
+    </div>
   );
 }
