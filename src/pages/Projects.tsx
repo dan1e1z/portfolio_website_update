@@ -60,7 +60,7 @@ export default function Projects() {
 
   return (
     <section ref={sectionRef} id="projects" className="relative w-full bg-background" style={sectionHeight ? { height: sectionHeight } : undefined}>
-      <div className="mx-auto px-5 py-20 md:sticky md:top-0 md:flex md:h-svh md:min-h-[640px] md:flex-col md:justify-between md:overflow-hidden md:px-12 md:py-10">
+      <div className="mx-auto px-5 py-20 md:px-12 md:py-10">
         <div className="mx-auto w-full max-w-7xl">
           <div className="mb-12 flex flex-col gap-6 border-b border-foreground/15 pb-7 md:mb-0 md:flex-row md:items-end md:justify-between">
             <div>
@@ -72,7 +72,7 @@ export default function Projects() {
         </div>
 
         {isDesktop ? (
-          <div className="relative -mx-12 flex min-h-0 flex-1 items-center overflow-hidden px-12">
+          <div className="relative -mx-12 flex h-[calc(100svh-13rem)] min-h-[560px] items-center overflow-hidden px-12 md:sticky md:top-0">
             <motion.div ref={trackRef} style={{ x, y: railY }} className="flex w-max items-center gap-10 py-10 pl-1 pr-[calc(100vw-6rem)] will-change-transform">
               {projects.map((item, index) => (
                 <div key={item.id} className={`w-[min(62vw,720px)] shrink-0 ${index % 2 === 0 ? "translate-y-8" : "-translate-y-8"}`}>
