@@ -21,11 +21,11 @@ const App: React.FC = () => {
   return (
   <Router>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="grain relative min-h-svh w-full overflow-hidden bg-[#1c1915]">
+      <div className="grain relative min-h-svh w-full overflow-hidden bg-background">
         <FloatingNav onTerminal={() => setIsTerminalVisible(true)} />
         <MobileDock />
         {isTerminalVisible && (
-          <div className="fixed inset-0 z-[120] flex items-center justify-center bg-[#1c1915]/75 p-4 backdrop-blur-md" onClick={() => setIsTerminalVisible(false)}>
+          <div className="fixed inset-0 z-[120] flex items-center justify-center bg-background/75 p-4 backdrop-blur-md" onClick={() => setIsTerminalVisible(false)}>
             <div onClick={(event) => event.stopPropagation()}>
               <TerminalWindow setIsTerminalVisible={setIsTerminalVisible} setIsSplit={setIsSplit} setSplitDirectory={setSplitDirectory} />
             </div>

@@ -49,7 +49,7 @@ export function FloatingNav({ onTerminal }: { onTerminal: () => void }) {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 260, damping: 26, delay: 0.15 }}
-        className="flex w-fit max-w-full items-center gap-1 rounded-full border border-[#eee9cc]/10 bg-[#1c1915]/70 px-2 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl"
+        className="flex w-fit max-w-full items-center gap-1 rounded-full border border-foreground/10 bg-background/70 px-2 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl"
         aria-label="Primary navigation"
         onMouseLeave={() => setHoveredPath(null)}
       >
