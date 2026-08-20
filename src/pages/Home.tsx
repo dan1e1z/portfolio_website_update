@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <ScrollArea
       viewportRef={containerRef}
-      className="h-full w-full bg-[#1c1915]"
+      className="h-full w-full bg-background"
     >
       <div className="relative w-full h-[40%]">
         <ParticleCanvas containerRef={containerRef} />

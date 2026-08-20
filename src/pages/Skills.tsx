@@ -16,7 +16,7 @@ const Skills = () => {
   return (
     <ScrollArea
       viewportRef={containerRef}
-      className="h-full w-full bg-[#1c1915]"
+      className="h-full w-full bg-background"
     >
       <Suspense fallback={<LoadingSpinner />}>
         <SkillHero containerRef={containerRef} />

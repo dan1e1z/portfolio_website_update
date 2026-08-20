@@ -22,11 +22,11 @@ export default function Projects() {
       className="relative h-full min-h-0 overflow-hidden"
     >
       <ScrollArea
-        className="h-full bg-[#1c1915]"
+        className="h-full bg-background"
         viewportRef={scrollRef}
       >
-        <div className="sticky top-0 z-10 shadow-md p-4 bg-[#1c1915]/60 backdrop-blur-2xl rounded-lg">
-          <div className="w-full h-2 bg-[#1c1915] rounded-lg overflow-hidden">
+        <div className="sticky top-0 z-10 shadow-md p-4 bg-background/60 backdrop-blur-2xl rounded-lg">
+          <div className="w-full h-2 bg-background rounded-lg overflow-hidden">
             <div
               className="h-full bg-[#eee9cc] rounded-lg transition-all duration-200"
               style={{ width: `${scrollProgress}%` }}
