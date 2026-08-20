@@ -1,199 +1,43 @@
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
-import { GRID_ITEMS } from "@/constants/homeData";
-import { MediaItem } from "@/types/home";
+import { ArrowUpRight } from "lucide-react";
+import { CHAPTERS } from "@/components/PortfolioCanvas";
 
-type RowHeights = [string, string];
+const chapterNotes: Record<string, string> = {
+  about: "A little context, the practice, and the thinking behind the work.",
+  projects: "Selected projects, experiments, and systems built with intent.",
+  skills: "The tools, disciplines, and technical instincts behind each release.",
+  contacts: "Start a conversation, commission a project, or say hello.",
+};
 
-// GridItem.tsx
-interface GridItemProps {
-  item: MediaItem;
-  index: number;
-  isActive: boolean;
-  isExpanded: boolean;
-  onClick: () => void;
-}
-
-const GridItem = ({ item, isActive, isExpanded, onClick }: GridItemProps) => {
+const HomeContent: React.FC = () => {
   return (
-    <motion.div
-      className={`relative h-full border-t border-[#eee9cc] text-[#eee9cc] md:border-r-[1px] last:border-r-0 cursor-pointer p-3 flex flex-col space-y-3 overflow-hidden
-      ${isActive || isExpanded ? "flex-[4]" : "flex-1"}`}
-      onClick={onClick}
-      layout
-    >
-      {/* Title Section */}
-      <div className="relative flex-none">
-        <h2 className="font-['ivar'] tracking-wider text-xs md:text-lg uppercase">
-          {item.title}/
-          <span className="font-['NeueMontreal'] text-[8px] md:text-[10px]">
-            {item.number}
-          </span>
-        </h2>
-        <h5 className="font-['NeueMontreal'] text-[8px] md:text-xs mt-1">
-          Details
-        </h5>
+    <section aria-labelledby="chapter-index-title" className="relative flex min-h-[calc(100svh-5rem)] w-full flex-col justify-center px-6 py-20 md:px-12 md:py-28">
+      <div className="mb-10 flex items-end justify-between gap-6 border-b border-foreground/15 pb-5 md:mb-14">
+        <div>
+          <p className="eyebrow mb-3">The portfolio / in motion</p>
+          <h2 id="chapter-index-title" className="font-sometimesTimes text-4xl leading-none tracking-tight text-foreground md:text-7xl">Explore the practice.</h2>
+        </div>
+        <span className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground md:block">Scroll to continue</span>
       </div>
 
-      {/* Video Section */}
-      <motion.div
-        className={`relative flex-auto overflow-hidden
-          ${isActive ? "w-full h-full" : "w-0 h-0"}`}
-        initial={false}
-        animate={{
-          width: isActive ? "100%" : "0%",
-          height: isActive ? "100%" : "0%",
-        }}
-        transition={{ duration: 0.3 }}
-      >
-        <motion.div
-          className="absolute top-0 left-0 w-full h-full bg-[#1c1915]"
-          initial={{ scale: 1.5, opacity: 0 }}
-          animate={{
-            scale: isActive ? 1 : 1.5,
-            opacity: isActive ? 1 : 0,
-          }}
-          transition={{ duration: 1 }}
-        >
-          {isActive && (
-            <video
-              src={item.videoUrl}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full"
-            />
-          )}
-        </motion.div>
-      </motion.div>
-    </motion.div>
-  );
-};
-// hooks/useContainerDimensions.ts
-const useContainerDimensions = (
-  containerRef: React.RefObject<HTMLDivElement>,
-) => {
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-
-  useEffect(() => {
-    const updateDimensions = () => {
-      if (!containerRef.current) return;
-
-      const nextDimensions = {
-        width: Math.round(containerRef.current.clientWidth),
-        height: Math.round(containerRef.current.clientHeight),
-      };
-
-      setDimensions((previous) =>
-        previous.width === nextDimensions.width &&
-        previous.height === nextDimensions.height
-          ? previous
-          : nextDimensions,
-      );
-    };
-
-    updateDimensions();
-    let frame = 0;
-    const observer = new ResizeObserver(() => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(updateDimensions);
-    });
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => {
-      observer.disconnect();
-      cancelAnimationFrame(frame);
-    };
-  }, [containerRef]);
-
-  return dimensions;
-};
-
-// HomeContent.tsx
-interface HomeContentProps {
-  containerRef: React.RefObject<HTMLDivElement>;
-}
-
-const HomeContent: React.FC<HomeContentProps> = ({ containerRef }) => {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [rowHeights, setRowHeights] = useState<RowHeights>(["50%", "50%"]);
-  const [isGridVisible, setIsGridVisible] = useState(false);
-  const dimensions = useContainerDimensions(containerRef);
-
-  useEffect(() => {
-    setTimeout(() => setIsGridVisible(true), 1000);
-  }, []);
-
-  const handleItemClick = (idx: number) => {
-    if (activeIndex === idx) {
-      setActiveIndex(null);
-      setRowHeights(["50%", "50%"]);
-      return;
-    }
-
-    setActiveIndex(idx);
-    const newHeights: RowHeights =
-      dimensions.width > 600
-        ? idx <= 2
-          ? ["70%", "30%"]
-          : ["30%", "70%"]
-        : ["50%", "50%"];
-
-    setRowHeights(newHeights);
-  };
-
-  const getExpandedIndexes = (idx: number): number[] => {
-    if (dimensions.width <= 600) return [idx];
-    if (idx === 0 || idx === 3) return [0, 3];
-    if (idx === 1 || idx === 4) return [1, 4];
-    return [2, 5];
-  };
-
-  return (
-    <div className="relative w-full h-full">
-      <motion.div
-        className="flex min-h-[calc(100svh-5rem)] w-full flex-col"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isGridVisible ? 1 : 0 }}
-        transition={{ duration: 1 }}
-      >
-        {[0, 1].map((rowIndex) => (
-          <div
-            key={rowIndex}
-            className="flex flex-row"
-            style={{ height: rowHeights[rowIndex] }}
+      <div className="divide-y divide-foreground/15 border-y border-foreground/15">
+        {CHAPTERS.slice(1).map((chapter) => (
+          <motion.a
+            key={chapter.id}
+            href={`#${chapter.id}`}
+            className="group grid min-h-32 grid-cols-[auto_1fr_auto] items-center gap-5 py-6 transition-colors duration-500 hover:bg-foreground/[0.04] md:min-h-40 md:grid-cols-[5rem_1fr_minmax(18rem,30rem)_auto] md:gap-8 md:py-8"
+            whileHover={{ x: 8 }}
+            transition={{ type: "spring", stiffness: 300, damping: 28 }}
           >
-            {GRID_ITEMS.slice(rowIndex * 3, (rowIndex + 1) * 3).map(
-              (item, idx) => {
-                const absoluteIdx = rowIndex * 3 + idx;
-                const isActive = activeIndex === absoluteIdx;
-                const isExpanded =
-                  activeIndex !== null &&
-                  getExpandedIndexes(activeIndex).includes(absoluteIdx);
-
-                return (
-                  <GridItem
-                    key={absoluteIdx}
-                    item={item}
-                    index={absoluteIdx}
-                    isActive={isActive}
-                    isExpanded={isExpanded}
-                    onClick={() => handleItemClick(absoluteIdx)}
-                  />
-                );
-              },
-            )}
-          </div>
+            <span className="font-mono text-xs tracking-[0.2em] text-muted-foreground">{chapter.number}</span>
+            <h3 className="font-sometimesTimes text-3xl tracking-tight text-foreground md:text-6xl">{chapter.label}</h3>
+            <p className="hidden text-sm leading-relaxed text-muted-foreground md:block">{chapterNotes[chapter.id]}</p>
+            <ArrowUpRight className="size-5 text-muted-foreground transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-foreground" aria-hidden="true" />
+          </motion.a>
         ))}
-      </motion.div>
-    </div>
+      </div>
+    </section>
   );
 };
 
 export default HomeContent;
-
-// TEST1

@@ -18,7 +18,7 @@ export default function Home() {
         </div>
       </section>
       <section className="min-h-[calc(100svh-5rem)] w-full snap-start">
-        <HomeContent containerRef={containerRef} />
+        <HomeContent />
       </section>
     </div>
   );
