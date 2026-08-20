@@ -1,72 +1,31 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
 import { ProjectItem } from "@/components/ProjectItem";
 import { projects } from "@/data/projects";
 
 export default function Projects() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isCompact, setIsCompact] = useState(false);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [travel, setTravel] = useState(0);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
-  const x = useTransform(scrollYProgress, [0, 1], [0, -travel]);
-  const progress = useTransform(scrollYProgress, [0, 1], [0, 100]);
-  const stageY = useTransform(scrollYProgress, [0, 1], [0, 72]);
-
-  useEffect(() => {
-    const update = () => setIsCompact(window.innerWidth < 768);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
-  useEffect(() => {
-    const updateTravel = () => {
-      if (!trackRef.current) return;
-      setTravel(Math.max(0, trackRef.current.scrollWidth - window.innerWidth + 96));
-    };
-    updateTravel();
-    const observer = new ResizeObserver(updateTravel);
-    if (trackRef.current) observer.observe(trackRef.current);
-    window.addEventListener("resize", updateTravel);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", updateTravel);
-    };
-  }, [isCompact]);
-
-  useMotionValueEvent(scrollYProgress, "change", () => undefined);
-
-  if (isCompact) {
-    return (
-      <section ref={sectionRef} className="relative w-full bg-background px-5 py-16">
-        <div className="mb-8 flex items-end justify-between border-b border-foreground/15 pb-4">
-          <div><p className="eyebrow">02 / Selected work</p><h2 className="mt-3 font-sometimesTimes text-5xl tracking-tight">Projects</h2></div>
-          <span className="font-mono text-xs text-muted-foreground">{projects.length} pieces</span>
-        </div>
-        <div className="flex flex-col gap-8">
-          {projects.map((item) => <ProjectItem key={item.id} id={`project${item.id}`} title={item.title} img={item.img} desc={item.desc} link={item.link} tech={item.tech} />)}
-        </div>
-      </section>
-    );
-  }
-
   return (
-    <section ref={sectionRef} className="relative w-full bg-background" style={{ height: `calc(${Math.max(1, travel) + window.innerHeight}px)` }}>
-      <div className="sticky top-0 flex h-svh min-h-[640px] flex-col justify-between overflow-hidden px-12 py-10">
-        <div className="flex items-end justify-between border-b border-foreground/15 pb-5">
-          <div><p className="eyebrow">02 / Selected work</p><h2 className="mt-3 font-sometimesTimes text-6xl tracking-tight">Projects</h2></div>
-          <p className="max-w-xs text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.16em] text-muted-foreground">Scroll down to move through the archive from left to right.</p>
+    <section className="relative w-full overflow-hidden bg-background px-5 py-20 md:px-12 md:py-28">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-16 flex flex-col gap-8 border-b border-foreground/15 pb-8 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="eyebrow">02 / Selected work</p>
+            <h2 className="mt-4 max-w-3xl font-sometimesTimes text-5xl leading-[0.9] tracking-tight text-foreground sm:text-7xl md:text-8xl">Redefining limits through digital work.</h2>
+          </div>
+          <p className="max-w-xs font-mono text-[10px] uppercase leading-relaxed tracking-[0.16em] text-muted-foreground">A living archive of products, platforms, and experiments built with intent.</p>
         </div>
-        <motion.div ref={trackRef} style={{ x, y: stageY }} className="flex w-max items-center gap-10 py-10 pl-1 pr-[calc(100vw-6rem)] will-change-transform">
+
+        <div className="grid grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-12 md:gap-y-24">
           {projects.map((item, index) => (
-            <div key={item.id} className={`flex w-[min(68vw,720px)] shrink-0 flex-col justify-center ${index % 2 === 0 ? "md:translate-y-3" : "md:-translate-y-3"}`}>
-              <div className="mb-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground"><span>0{index + 1}</span><span>{item.tech.join(" / ")}</span></div>
+            <div key={item.id} className={`${index % 3 === 1 ? "md:col-span-5 md:mt-28" : "md:col-span-7"} ${index % 3 === 2 ? "md:col-start-4" : ""}`}>
+              <div className="mb-4 flex items-center justify-between border-t border-foreground/15 pt-3 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                <span>0{index + 1} / {item.title}</span>
+                <span>{item.tech[0]}</span>
+              </div>
               <ProjectItem id={`project${item.id}`} title={item.title} img={item.img} desc={item.desc} link={item.link} tech={item.tech} />
             </div>
           ))}
-        </motion.div>
-        <div className="flex items-center gap-5"><div className="h-px flex-1 bg-foreground/15"><motion.div className="h-full origin-left bg-primary" style={{ scaleX: useTransform(progress, [0, 100], [0, 1]) }} /></div><span className="font-mono text-[10px] tracking-widest text-muted-foreground">SCROLL / {projects.length}</span></div>
+        </div>
+
+        <div className="mt-20 border-t border-foreground/15 pt-5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Scroll to continue through the archive</div>
       </div>
     </section>
   );

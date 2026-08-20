@@ -15,16 +15,16 @@ interface ProjectItemProps {
 
 export function ProjectItem({ id, title, img, desc, link, tech }: ProjectItemProps) {
   return (
-    <RevealOnScroll id={id} className="mx-auto my-8 w-full max-w-4xl">
-      <GlassCard className="flex flex-col overflow-hidden">
+    <RevealOnScroll id={id} className="w-full">
+      <GlassCard className="group flex flex-col overflow-hidden rounded-none border-foreground/15 bg-card/40 shadow-none transition-colors duration-500 hover:bg-card/70">
         <div className="w-full overflow-hidden">
           <a href={link} target="_blank" rel="noopener noreferrer" className="block" aria-label={`View ${title}`}>
-            <motion.div whileHover={{ scale: 0.97 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="relative w-full pt-[56.25%]">
-              <motion.img src={img} alt={title} className="absolute left-0 top-0 size-full object-contain" whileHover={{ scale: 1.04 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} />
+            <motion.div whileHover={{ scale: 0.985, rotate: 0.35 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="relative w-full bg-muted/20 pt-[62%]">
+              <motion.img src={img} alt={title} className="absolute left-0 top-0 size-full object-cover" whileHover={{ scale: 1.045 }} transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }} />
             </motion.div>
           </a>
         </div>
-        <div className="w-full p-8">
+        <div className="w-full p-5 sm:p-7">
           <CardHeader className="mb-4 p-0">
             <CardTitle className="heading-section flex flex-wrap items-center gap-4 text-2xl text-[#eee9cc]">
               <span>{title}</span>
