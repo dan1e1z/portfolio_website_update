@@ -48,7 +48,7 @@ export default function PortfolioCanvas() {
         {CHAPTERS.map(({ id }) => <span key={id} className={`h-8 w-px transition-colors ${active === id ? "bg-primary" : "bg-foreground/20"}`} />)}
       </div>
       {CHAPTERS.map(({ id, Page }) => (
-        <section key={id} id={id} className="relative min-h-svh scroll-mt-6 border-b border-foreground/10 py-10 md:py-16 last:border-b-0">
+        <section key={id} id={id} className="relative min-h-svh scroll-mt-24 border-b border-foreground/10 py-14 pb-24 md:scroll-mt-28 md:py-20 md:pb-28 last:border-b-0">
           <Suspense fallback={<LoadingSpinner />}><Page /></Suspense>
         </section>
       ))}

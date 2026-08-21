@@ -27,7 +27,7 @@ const App: React.FC = () => {
             </div>
           </div>
         )}
-        <main className="relative z-10 w-full pb-20 md:pt-20">
+        <main className="relative z-10 w-full pb-[calc(7rem+env(safe-area-inset-bottom))] pt-[calc(4rem+env(safe-area-inset-top))] md:pb-[calc(8rem+env(safe-area-inset-bottom))] md:pt-[calc(6rem+env(safe-area-inset-top))]">
           <PortfolioCanvas />
         </main>
         <Toaster />
