@@ -12,7 +12,7 @@ export default function Projects() {
 
   return (
     <section ref={sectionRef} id="projects" className="relative w-full bg-background">
-      <div className="content-rail page-gutter py-28 md:py-40">
+      <div className="mx-auto w-full max-w-7xl px-5 py-28 md:px-12 md:py-40">
         <header className="mb-20 grid gap-8 border-b border-foreground/15 pb-10 md:mb-32 md:grid-cols-[1fr_20rem] md:items-end md:gap-16">
           <div>
             <p className="eyebrow">02 / Selected work</p>

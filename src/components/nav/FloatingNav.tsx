@@ -44,12 +44,12 @@ export function FloatingNav({ onTerminal }: { onTerminal: () => void }) {
   const activePath = hoveredPath ?? NAV_ITEMS.find((item) => item.anchor === location.hash.slice(1))?.anchor ?? "home";
 
   return (
-    <div className="fixed inset-x-0 top-[clamp(0.75rem,2.5vw,1.5rem)] z-[100] hidden justify-center px-[clamp(0.75rem,3vw,2rem)] md:flex">
+    <div className="fixed inset-x-0 top-6 z-[100] hidden justify-center px-4 md:flex">
       <motion.nav
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 260, damping: 26, delay: 0.15 }}
-        className="flex w-fit max-w-[calc(100vw-2rem)] items-center gap-[clamp(0.125rem,0.35vw,0.375rem)] rounded-full border border-foreground/10 bg-background/70 p-[clamp(0.35rem,0.7vw,0.5rem)] shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl"
+        className="flex w-fit max-w-full items-center gap-1 rounded-full border border-foreground/10 bg-background/70 px-2 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl"
         aria-label="Primary navigation"
         onMouseLeave={() => setHoveredPath(null)}
       >
@@ -58,7 +58,7 @@ export function FloatingNav({ onTerminal }: { onTerminal: () => void }) {
           const Icon = item.icon;
           return (
             <Magnetic key={item.path}>
-              <a href={`#${item.anchor}`} onMouseEnter={() => setHoveredPath(item.anchor)} aria-current={active ? "page" : undefined} className="relative flex select-none items-center gap-[clamp(0.35rem,0.8vw,0.65rem)] rounded-full px-[clamp(0.55rem,1.2vw,1rem)] py-[clamp(0.45rem,0.7vw,0.65rem)] text-[clamp(0.72rem,1vw,0.875rem)] font-medium">
+              <a href={`#${item.anchor}`} onMouseEnter={() => setHoveredPath(item.anchor)} aria-current={active ? "page" : undefined} className="relative flex select-none items-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium">
                 {active && <motion.div layoutId="nav-pill" className="absolute inset-0 rounded-full bg-primary" transition={{ type: "spring", stiffness: 350, damping: 30 }} />}
                 <span className={cn("relative z-10 font-mono text-[9px] tracking-widest transition-colors duration-300", active ? "text-primary-foreground/55" : "text-foreground/35")}>{item.shortLabel}</span>
                 <Icon className={cn("relative z-10 size-4 transition-colors duration-300", active ? "text-primary-foreground" : "text-foreground/40")} aria-hidden="true" />
