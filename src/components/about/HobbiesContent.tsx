@@ -86,14 +86,13 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
 
   const { scrollYProgress } = useScroll({
     target: scrollRef,
-    container: containerRef,
-    offset: ["start end", "end end"],
+    offset: ["start end", "end start"],
     layoutEffect: false,
   });
 
-  const titleOpacity = useTransform(scrollYProgress, [0.9, 0.95], [0, 1]);
+  const titleOpacity = useTransform(scrollYProgress, [0.68, 0.82], [0, 1]);
 
-  const overlayOpacity = useTransform(scrollYProgress, [0.95, 1], [0, 0.5]);
+  const overlayOpacity = useTransform(scrollYProgress, [0.8, 0.94], [0, 0.5]);
 
   const squares = colors.map((color, index) => {
     const totalSquares = colors.length;
@@ -132,7 +131,7 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
   return (
     <>
       <div className="border-b border-b-[#EEE9CC] px-4 py-12 md:px-8 md:py-20" id="about4">
-        <div ref={scrollRef} className="h-[300vh]">
+        <div ref={scrollRef} className="h-[180vh] md:h-[220vh]">
           <div
             ref={gridRef}
             className="h-[90dvh] md:h-screen sticky top-0 grid place-items-center overflow-hidden"
@@ -155,8 +154,8 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
               className="absolute grid-area-[main] flex flex-col"
               initial={{ y: "100%", opacity: 0 }}
               style={{
-                y: useTransform(scrollYProgress, [0.4, 0.6], ["100%", "0%"]),
-                opacity: useTransform(scrollYProgress, [0.4, 0.6], [0, 1]),
+                y: useTransform(scrollYProgress, [0.28, 0.46], ["100%", "0%"]),
+                opacity: useTransform(scrollYProgress, [0.28, 0.46], [0, 1]),
               }}
             >
               <h2 className="text-[clamp(2rem,7vw,4.5rem)] leading-none mt-2 mb-0 font-medium tracking-tight">
