@@ -90,26 +90,26 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
     layoutEffect: false,
   });
 
-  const titleOpacity = useTransform(scrollYProgress, [0.68, 0.82], [0, 1]);
+  const titleOpacity = useTransform(scrollYProgress, [0.72, 0.9], [0, 1]);
 
-  const overlayOpacity = useTransform(scrollYProgress, [0.8, 0.94], [0, 0.5]);
+  const overlayOpacity = useTransform(scrollYProgress, [0.82, 0.98], [0, 0.5]);
 
   const squares = colors.map((color, index) => {
     const totalSquares = colors.length;
-    const stagger = 0.7 / totalSquares;
+    const stagger = 0.66 / totalSquares;
     const start = index * stagger;
-    const end = Math.min(start + stagger + 0.1, 0.95);
+    const end = Math.min(start + stagger + 0.16, 0.88);
 
     const direction = index % 2 === 0 ? 1 : -1;
     const distance = Math.abs(index - (totalSquares - 1) / 2);
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const y = useTransform(scrollYProgress, [start, end], [`${100 + distance * 8}vh`, "0vh"], { clamp: true });
+    const y = useTransform(scrollYProgress, [start, end], [`${110 + distance * 10}vh`, "0vh"], { clamp: true });
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const x = useTransform(scrollYProgress, [start, end], [`${direction * (18 + distance * 5)}vw`, "0vw"], { clamp: true });
+    const x = useTransform(scrollYProgress, [start, end], [`${direction * (22 + distance * 7)}vw`, "0vw"], { clamp: true });
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const rotate = useTransform(scrollYProgress, [start, end], [direction * (12 + distance * 3), 0], { clamp: true });
+    const rotate = useTransform(scrollYProgress, [start, end], [direction * (16 + distance * 4), 0], { clamp: true });
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const scale = useTransform(scrollYProgress, [start, end], [0.72, 1], { clamp: true });
+    const scale = useTransform(scrollYProgress, [start, end], [0.58, 1], { clamp: true });
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const opacity = useTransform(scrollYProgress, [start, Math.min(start + 0.1, 0.95)], [0, 1], { clamp: true });
 
@@ -130,12 +130,12 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
   return (
     <>
       <div className="border-b border-b-[#EEE9CC] px-4 py-12 md:px-8 md:py-20" id="about4">
-        <div ref={scrollRef} className="h-[220vh] md:h-[260vh]">
+        <div ref={scrollRef} className="h-[260vh] md:h-[300vh]">
           <div
             ref={gridRef}
             className="sticky top-0 grid h-[90dvh] place-items-center overflow-hidden [perspective:1200px] md:h-screen"
           >
-            <div className="grid w-full h-full grid-cols-8 grid-rows-3 gap-2">
+            <div className="grid h-full w-full grid-cols-8 grid-rows-3 gap-[clamp(0.25rem,1vw,0.75rem)] px-[clamp(0.5rem,3vw,2rem)]">
               {squares.map((square, index) => (
                 <motion.div
                   key={index + 1}
@@ -171,7 +171,7 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
 
             {/* Mask Layer */}
             <motion.div
-              className="absolute grid w-full h-full grid-cols-8 grid-rows-3 gap-2"
+              className="absolute grid h-full w-full grid-cols-8 grid-rows-3 gap-[clamp(0.25rem,1vw,0.75rem)] px-[clamp(0.5rem,3vw,2rem)]"
               style={{
                 opacity: overlayOpacity,
                 maskImage: "url(/Circle.svg)",
