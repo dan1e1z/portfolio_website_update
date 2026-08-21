@@ -25,7 +25,7 @@ const About: React.FC = () => {
       <Suspense fallback={<LoadingSpinner />}>
         <AboutSectionTitle containerRef={containerRef} />
       </Suspense>
-      <div className="relative space-y-16 font-neueMontreal text-[#EEE9CC] md:space-y-28">
+      <div className="relative font-neueMontreal text-[#EEE9CC]">
         <Suspense fallback={<LoadingSpinner />}>
           <AboutContent containerRef={containerRef} />
         </Suspense>
