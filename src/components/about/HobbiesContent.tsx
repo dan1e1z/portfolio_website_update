@@ -129,11 +129,11 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
 
   return (
     <>
-      <div className="border-b border-b-[#EEE9CC] px-4 py-12 md:px-8 md:py-20" id="about4">
+      <section className="relative border-b border-b-[#EEE9CC] px-4 py-12 md:px-8 md:py-20" id="about4">
         <div ref={scrollRef} className="h-[260vh] md:h-[300vh]">
           <div
             ref={gridRef}
-            className="sticky top-0 grid h-[90dvh] place-items-center overflow-hidden [perspective:1200px] md:h-screen"
+            className="sticky top-0 z-10 grid h-[100svh] place-items-center overflow-hidden [perspective:1200px]"
           >
             <div className="grid h-full w-full grid-cols-8 grid-rows-3 gap-[clamp(0.25rem,1vw,0.75rem)] px-[clamp(0.5rem,3vw,2rem)]">
               {squares.map((square, index) => (
@@ -206,7 +206,7 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
             </motion.h2>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 };

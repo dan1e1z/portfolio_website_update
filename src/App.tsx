@@ -17,7 +17,7 @@ const App: React.FC = () => {
   <Router>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <SmoothScroll>
-      <div className="grain relative min-h-svh w-full overflow-hidden bg-background">
+      <div className="grain relative min-h-svh w-full overflow-x-hidden bg-background">
         <FloatingNav onTerminal={() => setIsTerminalVisible(true)} />
         <MobileDock />
         {isTerminalVisible && (
