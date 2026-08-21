@@ -27,7 +27,7 @@ const About: React.FC = () => {
       </Suspense>
       <div className="relative font-neueMontreal text-[#EEE9CC]">
         <Suspense fallback={<LoadingSpinner />}>
-          <AboutContent containerRef={containerRef} />
+          <AboutContent />
         </Suspense>
         <EducationContent containerRef={containerRef} />
         <Suspense fallback={<LoadingSpinner />}>

@@ -1,42 +1,6 @@
-import { useRef } from "react";
 import { motion } from "framer-motion";
-import useContainerDimensions from "@/hooks/useContainerDimensions";
 
-interface AboutContentTitleProps {
-  containerRef: React.RefObject<HTMLDivElement>;
-}
-
-const AboutContent = ({ containerRef }: AboutContentTitleProps) => {
-  const scrollRef = useRef(null);
-  const dimensions = useContainerDimensions(containerRef);
-
-  const getResponsiveConfig = (width: number) => {
-    if (width < 374) {
-      return {
-        fontSize: "text-xs",
-      };
-    } else if (width < 420) {
-      return {
-        fontSize: "text-sm",
-      };
-    } else if (width < 484) {
-      return {
-        fontSize: "text-base",
-      };
-    } else if (width < 530) {
-      return {
-        fontSize: "text-lg",
-      };
-    } else {
-      return {
-        fontSize: "text-xl",
-      };
-    }
-  };
-
-  const config = dimensions?.width
-    ? getResponsiveConfig(dimensions.width)
-    : getResponsiveConfig(1000);
+const AboutContent = () => {
 
   return (
     <>
@@ -44,45 +8,19 @@ const AboutContent = ({ containerRef }: AboutContentTitleProps) => {
         className="min-h-[90dvh] border-b border-b-[#EEE9CC] bg-[#1d1915] px-4 py-12 md:min-h-screen md:px-8 md:py-20"
         id="about1"
       >
-        <div
-          ref={scrollRef}
-          style={{
-            height: "100%",
-            width: dimensions?.width || "100%",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <div className="mx-auto flex h-full w-full max-w-7xl items-center">
-            <motion.h2 className="text-8xl font-neueMontreal text-[#EEE9CC] pb-12">
+        <div className="mx-auto flex min-h-[inherit] w-full max-w-7xl items-center">
+          <div className="grid w-full items-center gap-8 md:grid-cols-[minmax(12rem,0.8fr)_minmax(0,1.4fr)] md:gap-16">
+            <motion.h2 className="font-neueMontreal text-[clamp(3.75rem,10vw,8rem)] leading-[0.86] tracking-[-0.04em] text-[#EEE9CC]">
               About
               <br />
               Me
             </motion.h2>
 
-            <p
-              className={`text-muted-foreground font-neueMontreal text-wrap ${config.fontSize}`}
-            >
-              A passionate{" "}
-              <strong className="text-[#EEE9CC]">web developer</strong>{" "}
-              specialising in creating <br />
-              <strong className="text-[#EEE9CC]">
-                {" "}
-                intuitive and visually appealing interfaces
-              </strong>
-              .<br />
-              Proficient in
-              <strong className="text-[#EEE9CC]">
-                {" "}
-                full-stack development
-              </strong>{" "}
-              with expertise <br />
-              in
-              <strong className="text-[#EEE9CC]">
-                {" "}
-                Python, TypeScript, React
-              </strong>
-              , and modern web technologies.
+            <p className="max-w-2xl text-pretty font-neueMontreal text-[clamp(0.9rem,1.6vw,1.25rem)] leading-relaxed text-muted-foreground">
+              A passionate <strong className="text-[#EEE9CC]">web developer</strong> specialising in creating{" "}
+              <strong className="text-[#EEE9CC]">intuitive and visually appealing interfaces</strong>. Proficient in{" "}
+              <strong className="text-[#EEE9CC]">full-stack development</strong> with expertise in{" "}
+              <strong className="text-[#EEE9CC]">Python, TypeScript, React</strong>, and modern web technologies.
             </p>
           </div>
         </div>
