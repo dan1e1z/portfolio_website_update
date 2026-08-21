@@ -11,7 +11,7 @@ const chapterNotes: Record<string, string> = {
 
 const HomeContent: React.FC = () => {
   return (
-    <section aria-labelledby="chapter-index-title" className="relative flex min-h-[calc(100svh-5rem)] w-full flex-col justify-center px-6 py-20 md:px-12 md:py-28">
+    <section aria-labelledby="chapter-index-title" className="relative flex min-h-[calc(100svh-5rem)] w-full flex-col justify-center px-6 py-20 md:px-12 md:py-28 bg-red">
       <div className="mb-10 flex items-end justify-between gap-6 border-b border-foreground/15 pb-5 md:mb-14">
         <div>
           <p className="eyebrow mb-3">The portfolio / in motion</p>
