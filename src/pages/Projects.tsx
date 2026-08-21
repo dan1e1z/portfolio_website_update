@@ -57,9 +57,9 @@ export default function Projects() {
 
   return (
     <section ref={sectionRef} id="projects" className="relative w-full bg-background" style={sectionHeight ? { height: sectionHeight } : undefined}>
-      <div className="mx-auto px-5 py-20 md:sticky md:top-0 md:flex md:h-svh md:min-h-[640px] md:flex-col md:justify-between md:overflow-hidden md:px-12 md:py-10">
+      <div className="mx-auto px-5 py-24 md:sticky md:top-0 md:flex md:h-svh md:min-h-[640px] md:flex-col md:justify-between md:overflow-hidden md:px-12 md:py-16">
         <div className="mx-auto w-full max-w-7xl">
-          <div className="mb-12 flex flex-col gap-6 border-b border-foreground/15 pb-7 md:mb-0 md:flex-row md:items-end md:justify-between">
+          <div className="mb-16 flex flex-col gap-8 border-b border-foreground/15 pb-10 md:mb-0 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="eyebrow">02 / Selected work</p>
               <h2 className="mt-4 max-w-3xl font-sometimesTimes text-5xl leading-[0.9] tracking-tight text-foreground sm:text-7xl md:text-8xl">Redefining limits through digital work.</h2>
@@ -70,7 +70,7 @@ export default function Projects() {
 
         {isDesktop ? (
           <div className="relative -mx-12 flex min-h-0 flex-1 items-center overflow-hidden px-12">
-            <motion.div ref={trackRef} style={{ x }} className="flex w-max items-center gap-10 py-10 pl-1 pr-[calc(100vw-6rem)] will-change-transform">
+            <motion.div ref={trackRef} style={{ x }} className="flex w-max items-center gap-14 py-16 pl-1 pr-[calc(100vw-6rem)] will-change-transform">
               {projects.map((item, index) => (
                 <div key={item.id} className={`w-[min(62vw,720px)] shrink-0 ${index % 2 === 0 ? "translate-y-4" : "-translate-y-4"}`}>
                   <div className="mb-4 flex items-center justify-between border-t border-foreground/15 pt-3 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
@@ -82,7 +82,7 @@ export default function Projects() {
             </motion.div>
           </div>
         ) : (
-          <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-16">
+          <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-24">
             {projects.map((item, index) => (
               <div key={item.id}>
                 <div className="mb-4 flex items-center justify-between border-t border-foreground/15 pt-3 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">

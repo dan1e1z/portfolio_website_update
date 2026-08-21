@@ -13,7 +13,7 @@ const Skills = () => {
   useScrollNavigation(containerRef, skillSection, "skills");
 
   return (
-    <div className="w-full bg-background">
+    <div className="w-full bg-background py-8 md:py-16">
       <Suspense fallback={<LoadingSpinner />}>
         <SkillHero containerRef={containerRef} />
       </Suspense>

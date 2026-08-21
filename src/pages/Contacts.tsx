@@ -52,7 +52,7 @@ const ContactPage = () => {
   const isColumnLayout = config.contentPosition === "flex flex-col gap-12";
 
   return (
-    <div className="relative w-full bg-background">
+    <div className="relative w-full bg-background py-8 md:py-16">
       <div className={`${config.contentPosition} p-6 relative`}>
         {/* Left Column - Contact Info */}
         <div className="flex flex-col gap-12 text-[#eee9cc] relative">

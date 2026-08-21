@@ -18,14 +18,14 @@ const About: React.FC = () => {
   useScrollNavigation(containerRef, aboutSections, "about");
 
   return (
-    <div className="w-full bg-background">
+    <div className="w-full bg-background py-8 md:py-16">
       <Suspense fallback={<LoadingSpinner />}>
         <AboutHero containerRef={containerRef} />
       </Suspense>
       <Suspense fallback={<LoadingSpinner />}>
         <AboutSectionTitle containerRef={containerRef} />
       </Suspense>
-      <div className="font-neueMontreal text-[#EEE9CC] relative">
+      <div className="relative space-y-16 font-neueMontreal text-[#EEE9CC] md:space-y-28">
         <Suspense fallback={<LoadingSpinner />}>
           <AboutContent containerRef={containerRef} />
         </Suspense>
