@@ -18,7 +18,7 @@ const About: React.FC = () => {
   useScrollNavigation(containerRef, aboutSections, "about");
 
   return (
-    <div className="w-full bg-background py-8 md:py-16">
+    <div className="w-full bg-background px-5 py-8 md:px-12 md:py-16"><div className="mx-auto w-full max-w-7xl">
       <Suspense fallback={<LoadingSpinner />}>
         <AboutHero containerRef={containerRef} />
       </Suspense>
@@ -38,6 +38,7 @@ const About: React.FC = () => {
         </Suspense>
       </div>
     </div>
+  </div>
   );
 };
 

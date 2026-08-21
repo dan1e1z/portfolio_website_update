@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <div className="w-full bg-background">
-      <motion.section ref={heroRef} style={{ scale: heroScale, opacity: heroOpacity, y: heroY }} className="relative flex min-h-[calc(100svh-5rem)] w-full snap-start items-end overflow-hidden px-6 pb-20 pt-12 md:px-12 md:pb-28 md:pt-20">
+      <motion.section ref={heroRef} style={{ scale: heroScale, opacity: heroOpacity, y: heroY }} className="relative mx-auto flex min-h-[calc(100svh-5rem)] w-full max-w-7xl snap-start items-end overflow-hidden px-5 pb-20 pt-12 md:px-12 md:pb-28 md:pt-20">
         <ParticleCanvas containerRef={containerRef} />
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }} className="relative z-10 flex w-full items-end justify-between gap-8 border-t border-foreground/20 pt-6">
           <div>
@@ -26,9 +26,9 @@ export default function Home() {
           <span className="h-8 w-px bg-foreground/30" /> Scroll to explore
         </motion.div>
       </motion.section>
-      <section className="min-h-[calc(100svh-5rem)] w-full snap-start px-6 py-16 md:px-12 md:py-28">
+      <section className="min-h-[calc(100svh-5rem)] w-full snap-start px-5 py-16 md:px-12 md:py-28"><div className="mx-auto w-full max-w-7xl">
         <HomeContent />
-      </section>
+      </div></section>
     </div>
   );
 }
