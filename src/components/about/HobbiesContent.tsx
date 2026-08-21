@@ -1,214 +1,95 @@
-import React, { useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import useMousePosition from "@/hooks/useMousePosition";
-import useContainerDimensions from "@/hooks/useContainerDimensions";
+import { useMemo, useRef } from "react";
+import {
+  MotionValue,
+  motion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 
-const colors = [
-  "bg-[#9C8779]",
-  "bg-[#3E2B1A]",
-  "bg-[#311908]",
-  "bg-[#7D614C]",
-  "bg-[#847E7C]",
-  "bg-[#5B402B]",
-  "bg-[#B8B5B7]",
-  "bg-[#A8A19E]",
-  "bg-[#4A4948]",
-  "bg-[#462421]",
-  "bg-[#4F2F2B]",
-  "bg-[#8E5A59]",
-  "bg-[#6B4943]",
-  "bg-[#6B423A]",
-  "bg-[#643B36]",
-  "bg-[#453F33]",
+const TOTAL_TIMELINE_DURATION = 2;
+const IMAGE_DURATION = 0.5;
+const STAGGER_INTERVAL = 0.07;
+const ANIMATION_END_AT = 0.4;
+
+const COLORS = [
+  "bg-[#9C8779]", "bg-[#3E2B1A]", "bg-[#311908]", "bg-[#7D614C]",
+  "bg-[#847E7C]", "bg-[#5B402B]", "bg-[#B8B5B7]", "bg-[#A8A19E]",
+  "bg-[#4A4948]", "bg-[#462421]", "bg-[#4F2F2B]", "bg-[#8E5A59]",
+  "bg-[#6B4943]", "bg-[#6B423A]", "bg-[#643B36]", "bg-[#453F33]",
   "bg-[#32322D]",
 ];
 
-interface HobbiesContentProps {
-  containerRef: React.RefObject<HTMLDivElement>;
-}
+type GridPosition = { row: number; col: number };
 
-type PositionMap = {
-  [key: number]: string;
+const SQUARE_POSITIONS: Record<number, GridPosition> = {
+  1: { row: 1, col: 1 }, 2: { row: 1, col: 3 }, 3: { row: 1, col: 4 },
+  4: { row: 1, col: 5 }, 5: { row: 1, col: 7 }, 6: { row: 2, col: 1 },
+  7: { row: 2, col: 3 }, 8: { row: 2, col: 4 }, 9: { row: 2, col: 6 },
+  10: { row: 2, col: 7 }, 11: { row: 2, col: 8 }, 12: { row: 3, col: 1 },
+  13: { row: 3, col: 2 }, 14: { row: 3, col: 4 }, 15: { row: 3, col: 5 },
+  16: { row: 3, col: 7 }, 17: { row: 3, col: 8 },
 };
 
-const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
-  const dimensions = useContainerDimensions(containerRef);
+const randomBetween = (min: number, max: number) => min + Math.random() * (max - min);
 
-  const getResponsiveConfig = (width: number) => {
-    if (width < 454) {
-      return {
-        titleTextSize: "text-5xl",
-      };
-    }
-    if (width < 615) {
-      return {
-        textSize: "text-xl",
-      };
-    } else {
-      return {
-        titleTextSize: "text-6xl",
-        textSize: "text-2xl",
-      };
-    }
-  };
-
-  const config = dimensions?.width
-    ? getResponsiveConfig(dimensions.width)
-    : getResponsiveConfig(1000);
-
-  const positions: PositionMap = {
-    1: "row-start-1 col-start-1",
-    2: "row-start-1 col-start-3",
-    3: "row-start-1 col-start-4",
-    4: "row-start-1 col-start-5",
-    5: "row-start-1 col-start-7",
-    6: "row-start-2 col-start-1",
-    7: "row-start-2 col-start-3",
-    8: "row-start-2 col-start-4",
-    9: "row-start-2 col-start-6",
-    10: "row-start-2 col-start-7",
-    11: "row-start-2 col-start-8",
-    12: "row-start-3 col-start-1",
-    13: "row-start-3 col-start-2",
-    14: "row-start-3 col-start-4",
-    15: "row-start-3 col-start-5",
-    16: "row-start-3 col-start-7",
-    17: "row-start-3 col-start-8",
-  };
-
-  const getPositionStyles = (pos: number): string => {
-    return positions[pos] || "";
-  };
-
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-
-  const { scrollYProgress } = useScroll({
-    target: scrollRef,
-    offset: ["start end", "end start"],
-    layoutEffect: false,
-  });
-
-  const titleOpacity = useTransform(scrollYProgress, [0.72, 0.9], [0, 1]);
-
-  const overlayOpacity = useTransform(scrollYProgress, [0.82, 0.98], [0, 0.5]);
-
-  const squares = colors.map((color, index) => {
-    const totalSquares = colors.length;
-    const stagger = 0.66 / totalSquares;
-    const start = index * stagger;
-    const end = Math.min(start + stagger + 0.16, 0.88);
-
-    const direction = index % 2 === 0 ? 1 : -1;
-    const distance = Math.abs(index - (totalSquares - 1) / 2);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const y = useTransform(scrollYProgress, [start, end], [`${110 + distance * 10}vh`, "0vh"], { clamp: true });
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const x = useTransform(scrollYProgress, [start, end], [`${direction * (22 + distance * 7)}vw`, "0vw"], { clamp: true });
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const rotate = useTransform(scrollYProgress, [start, end], [direction * (16 + distance * 4), 0], { clamp: true });
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const scale = useTransform(scrollYProgress, [start, end], [0.58, 1], { clamp: true });
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const opacity = useTransform(scrollYProgress, [start, Math.min(start + 0.1, 0.95)], [0, 1], { clamp: true });
-
-    return { color, x, y, rotate, scale, opacity };
-  });
-
-  const { mouseX, mouseY } = useMousePosition(gridRef);
-  const size = isHovered ? 200 : 60;
-
-  const activities = [
-    { activity: "Reading", rowStart: 1, colStart: 3 },
-    { activity: "Hiking", rowStart: 2, colStart: 3 },
-    { activity: "Photography", rowStart: 2, colStart: 7 },
-    { activity: "Chess", rowStart: 3, colStart: 2 },
-    { activity: "Gaming", rowStart: 3, colStart: 8 },
-  ];
+const HobbiesContent = () => {
+  const targetRef = useRef<HTMLDivElement>(null);
+  const randomStartHeights = useMemo(
+    () => COLORS.map(() => (typeof window === "undefined" ? 1000 : randomBetween(window.innerHeight, window.innerHeight * 1.8))),
+    [],
+  );
+  const { scrollYProgress } = useScroll({ target: targetRef, offset: ["start start", "end end"] });
+  const scrubbedProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.2 });
 
   return (
-    <>
-      <section className="relative border-b border-b-[#EEE9CC] px-4 py-12 md:px-8 md:py-20" id="about4">
-        <div ref={scrollRef} className="h-[260vh] md:h-[300vh]">
-          <div
-            ref={gridRef}
-            className="sticky top-0 z-10 grid h-[100svh] place-items-center overflow-hidden [perspective:1200px]"
-          >
-            <div className="grid h-full w-full grid-cols-8 grid-rows-3 gap-[clamp(0.25rem,1vw,0.75rem)] px-[clamp(0.5rem,3vw,2rem)]">
-              {squares.map((square, index) => (
-                <motion.div
-                  key={index + 1}
-                  className={`aspect-square w-full h-full ${square.color} ${getPositionStyles(index + 1)}`}
-                  style={{
-                    x: square.x,
-                    y: square.y,
-                    rotate: square.rotate,
-                    scale: square.scale,
-                    opacity: square.opacity,
-                    position: "relative",
-                    transformPerspective: 1200,
-                  }}
-                  initial={{ y: "100vh", opacity: 0 }}
-                />
-              ))}
-            </div>
-            <motion.div
-              className="absolute grid-area-[main] flex flex-col"
-              initial={{ y: "100%", opacity: 0 }}
-              style={{
-                y: useTransform(scrollYProgress, [0.28, 0.46], ["100%", "0%"]),
-                opacity: useTransform(scrollYProgress, [0.28, 0.46], [0, 1]),
-              }}
-            >
-              <h2 className="text-[clamp(2rem,7vw,4.5rem)] leading-none mt-2 mb-0 font-medium tracking-tight">
-                Hobbies
-              </h2>
-              <p className="text-[11px] uppercase font-normal text-right self-end m-0 max-w-[100px]">
-                Captured in happy moments
-              </p>
-            </motion.div>
-
-            {/* Mask Layer */}
-            <motion.div
-              className="absolute grid h-full w-full grid-cols-8 grid-rows-3 gap-[clamp(0.25rem,1vw,0.75rem)] px-[clamp(0.5rem,3vw,2rem)]"
-              style={{
-                opacity: overlayOpacity,
-                maskImage: "url(/Circle.svg)",
-                WebkitMaskImage: "url(/Circle.svg)",
-                backgroundColor: "#f9f871",
-                maskRepeat: "no-repeat",
-                maskSize: `${size}px`,
-                WebkitMaskSize: `${size}px`,
-                maskPosition: `${mouseX - size / 2}px ${mouseY - size / 2}px`,
-                WebkitMaskPosition: `${mouseX - size / 2}px ${mouseY - size / 2}px`,
-              }}
-            >
-              {activities.map(({ activity, rowStart, colStart }, index) => (
-                <div
-                  key={`activity-${index}`}
-                  className={`row-start-${rowStart} col-start-${colStart} flex justify-center items-center text-[#eee9cc] ${config.textSize} uppercase mix-blend-exclusion`}
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(false)}
-                >
-                  {activity}
-                </div>
-              ))}
-            </motion.div>
-
-            {/* Title with scroll-based opacity */}
-            <motion.h2
-              className={`absolute top-0 left-0 mt-8 ml-4 text-[#eee9cc] font-pacifico uppercase ${config?.titleTextSize} font-medium tracking-tight`}
-              style={{ opacity: titleOpacity, pointerEvents: "none" }}
-            >
-              Look for my <br />
-              hobbies
-            </motion.h2>
+    <section ref={targetRef} id="about4" className="relative h-[350vh] w-full border-b border-b-[#EEE9CC] bg-[#1d1915]">
+      <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden">
+        <div className="relative grid h-full w-full place-items-center">
+          <div className="grid h-full w-full grid-cols-8 grid-rows-3 gap-3 p-6 md:gap-4 md:p-12">
+            {COLORS.map((color, index) => (
+              <AnimatedSquare key={index + 1} color={color} position={SQUARE_POSITIONS[index + 1]} index={index} progress={scrubbedProgress} fromY={randomStartHeights[index]} />
+            ))}
           </div>
+          <AnimatedTitle progress={scrubbedProgress} />
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
+
+interface AnimatedSquareProps {
+  color: string;
+  position?: GridPosition;
+  index: number;
+  progress: MotionValue<number>;
+  fromY: number;
+}
+
+function AnimatedSquare({ color, position, index, progress, fromY }: AnimatedSquareProps) {
+  const rawStart = (index * STAGGER_INTERVAL) / TOTAL_TIMELINE_DURATION;
+  const rawEnd = Math.min((index * STAGGER_INTERVAL + IMAGE_DURATION) / TOTAL_TIMELINE_DURATION, 1);
+  const startProgress = rawStart * ANIMATION_END_AT;
+  const endProgress = rawEnd * ANIMATION_END_AT;
+  const y = useTransform(progress, [startProgress, endProgress], [fromY, 0], { clamp: true });
+
+  return <motion.div className={`aspect-square h-full w-full rounded-sm ${color}`} style={{ y, gridRowStart: position?.row, gridColumnStart: position?.col }} />;
+}
+
+function AnimatedTitle({ progress }: { progress: MotionValue<number> }) {
+  const rawStart = 0.8 / TOTAL_TIMELINE_DURATION;
+  const rawEnd = (0.8 + 1.2) / TOTAL_TIMELINE_DURATION;
+  const startProgress = rawStart * ANIMATION_END_AT;
+  const endProgress = rawEnd * ANIMATION_END_AT;
+  const titleY = useTransform(progress, [startProgress, startProgress + 0.15 * ANIMATION_END_AT, startProgress + 0.35 * ANIMATION_END_AT, endProgress], ["180%", "120%", "30%", "0%"], { clamp: true });
+  const titleOpacity = useTransform(progress, [startProgress, startProgress + 0.2 * ANIMATION_END_AT, endProgress], [0, 0.7, 1], { clamp: true });
+
+  return (
+    <motion.div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center text-center" style={{ y: titleY, opacity: titleOpacity }}>
+      <h2 className="mb-0 mt-2 text-[clamp(2.5rem,7vw,5rem)] font-medium leading-none tracking-tight text-[#eee9cc]">Hobbies</h2>
+      <p className="mt-2 text-xs uppercase tracking-widest text-[#eee9cc]/70">Captured in happy moments</p>
+    </motion.div>
+  );
+}
 
 export default HobbiesContent;

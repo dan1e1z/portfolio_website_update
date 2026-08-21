@@ -34,7 +34,7 @@ const About: React.FC = () => {
           <InterestsContent containerRef={containerRef} />
         </Suspense>
         <Suspense fallback={<LoadingSpinner />}>
-          <HobbiesContent containerRef={containerRef} />
+          <HobbiesContent />
         </Suspense>
       </div>
     </div>
