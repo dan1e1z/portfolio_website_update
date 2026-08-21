@@ -30,7 +30,7 @@ const InterestsContent = ({ containerRef }: InterestsContentProps) => {
   return (
     <>
       <div
-        className="h-[90vh] md:h-screen border-b border-b-[#EEE9CC] bg-[#1d1915]"
+        className="min-h-[90vh] border-b border-b-[#EEE9CC] bg-[#1d1915] px-4 py-12 md:min-h-screen md:px-8 md:py-20"
         id="about3"
       >
         <div

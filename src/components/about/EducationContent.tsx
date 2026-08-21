@@ -1,5 +1,4 @@
 import React from "react";
-import VerticalSwiper from "@/components/about/VerticalSwiper";
 import useContainerDimensions from "@/hooks/useContainerDimensions";
 
 interface EducationContentProps {
@@ -42,7 +41,7 @@ const EducationContent: React.FC<EducationContentProps> = ({
 
   return (
     <>
-      <div className="border-b border-b-[#EEE9CC] bg-[#1d1915]" id="about2">
+      <div className="border-b border-b-[#EEE9CC] bg-[#1d1915] px-4 py-12 md:px-8 md:py-20" id="about2">
         <div
           style={{
             width: dimensions?.width || "100%",
@@ -59,7 +58,9 @@ const EducationContent: React.FC<EducationContentProps> = ({
               Computer Science
             </span>
           </p>
-          <VerticalSwiper containerRef={containerRef} />
+          <span className="absolute right-0 top-0 text-xs uppercase tracking-[0.2em] text-[#EEE9CC]/70 md:text-sm">
+            TypeScript Certification
+          </span>
         </div>
       </div>
     </>

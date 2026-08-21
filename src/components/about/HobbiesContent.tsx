@@ -131,7 +131,7 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
 
   return (
     <>
-      <div className="" id="about4">
+      <div className="border-b border-b-[#EEE9CC] px-4 py-12 md:px-8 md:py-20" id="about4">
         <div ref={scrollRef} className="h-[300vh]">
           <div
             ref={gridRef}

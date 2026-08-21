@@ -41,7 +41,7 @@ const AboutContent = ({ containerRef }: AboutContentTitleProps) => {
   return (
     <>
       <div
-        className="h-[90dvh] md:h-screen border-b border-b-[#EEE9CC] bg-[#1d1915]"
+        className="min-h-[90dvh] border-b border-b-[#EEE9CC] bg-[#1d1915] px-4 py-12 md:min-h-screen md:px-8 md:py-20"
         id="about1"
       >
         <div
@@ -53,7 +53,7 @@ const AboutContent = ({ containerRef }: AboutContentTitleProps) => {
             alignItems: "center",
           }}
         >
-          <div className="pl-4">
+          <div className="mx-auto flex h-full w-full max-w-7xl items-center">
             <motion.h2 className="text-8xl font-neueMontreal text-[#EEE9CC] pb-12">
               About
               <br />
