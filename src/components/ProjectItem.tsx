@@ -1,8 +1,7 @@
-import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { GlassCard } from "@/components/ui/glass-card";
-import { RevealOnScroll } from "@/components/RevealOnScroll";
+import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { Badge } from "@/components/ui/badge";
+import { RevealOnScroll } from "@/components/RevealOnScroll";
 
 interface ProjectItemProps {
   id: string;
@@ -11,31 +10,50 @@ interface ProjectItemProps {
   desc: string;
   link: string;
   tech: string[];
+  index: number;
+  total: number;
 }
 
-export function ProjectItem({ id, title, img, desc, link, tech }: ProjectItemProps) {
+export function ProjectItem({ id, title, img, desc, link, tech, index, total }: ProjectItemProps) {
+  const reversed = index % 2 === 1;
+
   return (
     <RevealOnScroll id={id} className="w-full">
-      <GlassCard className="group flex flex-col overflow-hidden rounded-none border-foreground/15 bg-card/40 shadow-none transition-colors duration-500 hover:bg-card/70">
-        <div className="w-full overflow-hidden">
-          <a href={link} target="_blank" rel="noopener noreferrer" className="block" aria-label={`View ${title}`}>
-            <motion.div whileHover={{ scale: 0.985, rotate: 0.35 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="relative w-full bg-muted/20 pt-[62%]">
-              <motion.img src={img} alt={title} className="absolute left-0 top-0 size-full object-cover" whileHover={{ scale: 1.045 }} transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }} />
-            </motion.div>
-          </a>
+      <motion.a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`group grid items-center gap-8 border-t border-foreground/15 py-12 md:grid-cols-12 md:gap-12 md:py-24 ${reversed ? "md:[&>*:first-child]:order-2" : ""}`}
+        whileHover="hover"
+      >
+        <div className="md:col-span-7">
+          <div className="relative aspect-[16/10] overflow-hidden bg-muted/20">
+            <motion.img
+              src={img}
+              alt={`${title} project preview`}
+              className="size-full object-cover"
+              variants={{ hover: { scale: 1.04 } }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            />
+          </div>
         </div>
-        <div className="w-full p-5 sm:p-7">
-          <CardHeader className="mb-4 p-0">
-            <CardTitle className="heading-section flex flex-wrap items-center gap-4 text-2xl text-[#eee9cc]">
-              <span>{title}</span>
-              <div className="flex flex-wrap gap-2">
-                {tech.map((item) => <Badge key={item} variant="secondary" className="body-mono border-0 bg-[#eee9cc]/10 text-[#eee9cc]">{item}</Badge>)}
-              </div>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0"><p className="leading-relaxed text-[#eee9cc]/70">{desc}</p></CardContent>
+        <div className="flex flex-col justify-between gap-8 md:col-span-5 md:min-h-56">
+          <div>
+            <div className="mb-6 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+              <span>{String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
+              <span>{tech[0]}</span>
+            </div>
+            <h3 className="font-neueMontreal text-4xl font-medium leading-[0.9] tracking-[-0.04em] text-foreground sm:text-5xl md:text-6xl">{title}</h3>
+            <p className="mt-6 max-w-md leading-relaxed text-muted-foreground">{desc}</p>
+          </div>
+          <div className="flex items-end justify-between gap-4">
+            <div className="flex flex-wrap gap-2">
+              {tech.map((item) => <Badge key={item} variant="secondary" className="font-mono text-[10px] uppercase tracking-[0.08em]">{item}</Badge>)}
+            </div>
+            <motion.span variants={{ hover: { x: 5, y: -5 } }} className="shrink-0 text-foreground" aria-hidden="true"><ArrowUpRight className="size-6" /></motion.span>
+          </div>
         </div>
-      </GlassCard>
+      </motion.a>
     </RevealOnScroll>
   );
 }
