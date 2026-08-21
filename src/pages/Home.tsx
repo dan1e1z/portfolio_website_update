@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <div className="w-full bg-background">
       <motion.section ref={heroRef} style={{ scale: heroScale, opacity: heroOpacity, y: heroY }} className="relative mx-auto flex min-h-[calc(100svh-5rem)] w-full max-w-7xl snap-start items-end overflow-hidden px-5 pb-20 pt-12 md:px-12 md:pb-28 md:pt-20">
-        <ParticleCanvas containerRef={containerRef} />
+        {/* <ParticleCanvas containerRef={containerRef} /> */}
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }} className="relative z-10 flex w-full items-end justify-between gap-8 border-t border-foreground/20 pt-6">
           <div>
             <p className="eyebrow mb-3">Independent digital portfolio</p>
