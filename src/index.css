@@ -63,6 +63,10 @@
   .body-mono { @apply font-mono text-[13px] leading-relaxed tracking-wide; }
   .eyebrow { @apply font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground; }
   .glass-surface { @apply border border-foreground/10 bg-foreground/[0.04] backdrop-blur-xl; }
+  .page-gutter { padding-inline: clamp(1rem, 4vw, 3rem); }
+  .content-rail { width: min(100%, 90rem); margin-inline: auto; }
+  :root { --nav-top-space: clamp(4.25rem, 9vw, 6rem); --nav-bottom-space: clamp(4.75rem, 11vw, 7rem); }
+  @media (min-width: 768px) { :root { --nav-top-space: clamp(5.25rem, 8vw, 7rem); --nav-bottom-space: clamp(4rem, 7vw, 5.5rem); } }
   .text-balance { text-wrap: balance; }
   .grain::before { content: ""; position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.035; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
   .underline-hover { @apply relative; }
