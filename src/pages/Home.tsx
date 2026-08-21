@@ -1,10 +1,8 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import ParticleCanvas from "@/components/home/ParticalCanvas";
 import HomeContent from "@/components/home/HomeContent";
 
 export default function Home() {
-  const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroScale = useTransform(scrollYProgress, [0, 0.72], [1, 0.9]);
