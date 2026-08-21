@@ -100,21 +100,20 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
     const start = index * stagger;
     const end = Math.min(start + stagger + 0.1, 0.95);
 
+    const direction = index % 2 === 0 ? 1 : -1;
+    const distance = Math.abs(index - (totalSquares - 1) / 2);
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const y = useTransform(scrollYProgress, [start, end], ["100vh", "0vh"], {
-      clamp: true,
-    });
+    const y = useTransform(scrollYProgress, [start, end], [`${100 + distance * 8}vh`, "0vh"], { clamp: true });
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const opacity = useTransform(
-      scrollYProgress,
-      [start, Math.min(start + 0.1, 0.95)],
-      [0, 1],
-      {
-        clamp: true,
-      },
-    );
+    const x = useTransform(scrollYProgress, [start, end], [`${direction * (18 + distance * 5)}vw`, "0vw"], { clamp: true });
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const rotate = useTransform(scrollYProgress, [start, end], [direction * (12 + distance * 3), 0], { clamp: true });
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const scale = useTransform(scrollYProgress, [start, end], [0.72, 1], { clamp: true });
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const opacity = useTransform(scrollYProgress, [start, Math.min(start + 0.1, 0.95)], [0, 1], { clamp: true });
 
-    return { color, y, opacity };
+    return { color, x, y, rotate, scale, opacity };
   });
 
   const { mouseX, mouseY } = useMousePosition(gridRef);
@@ -131,10 +130,10 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
   return (
     <>
       <div className="border-b border-b-[#EEE9CC] px-4 py-12 md:px-8 md:py-20" id="about4">
-        <div ref={scrollRef} className="h-[180vh] md:h-[220vh]">
+        <div ref={scrollRef} className="h-[220vh] md:h-[260vh]">
           <div
             ref={gridRef}
-            className="h-[90dvh] md:h-screen sticky top-0 grid place-items-center overflow-hidden"
+            className="sticky top-0 grid h-[90dvh] place-items-center overflow-hidden [perspective:1200px] md:h-screen"
           >
             <div className="grid w-full h-full grid-cols-8 grid-rows-3 gap-2">
               {squares.map((square, index) => (
@@ -142,9 +141,13 @@ const HobbiesContent = ({ containerRef }: HobbiesContentProps) => {
                   key={index + 1}
                   className={`aspect-square w-full h-full ${square.color} ${getPositionStyles(index + 1)}`}
                   style={{
+                    x: square.x,
                     y: square.y,
+                    rotate: square.rotate,
+                    scale: square.scale,
                     opacity: square.opacity,
                     position: "relative",
+                    transformPerspective: 1200,
                   }}
                   initial={{ y: "100vh", opacity: 0 }}
                 />
