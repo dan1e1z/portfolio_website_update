@@ -1,6 +1,5 @@
 import ContactInfo from "@/components/contact/ContactInfo";
 import SocialLinks from "@/components/contact/SocialLinks";
-import ContactForm from "@/components/contact/ContactForm";
 import { contactInfo, socialLinks } from "@/data/contact";
 import { motion } from "framer-motion";
 import Arrow from "@/animations/Arrow";
@@ -98,16 +97,8 @@ const ContactPage = () => {
           variants={slideInVariants}
           initial="hidden"
           animate="visible"
-          className="w-[120px] ml-[20px] mr-[20px] border-l border-l-[#eee9cc] border-r border-r-[#eee9cc]"
+          className="hidden w-[120px] ml-[20px] mr-[20px] border-l border-l-[#eee9cc] border-r border-r-[#eee9cc] lg:block"
         />
-        <motion.div
-          variants={slideInVariants}
-          initial="hidden"
-          animate="visible"
-          className="flex-1 text-[#eee9cc]"
-        >
-          <ContactForm containerRef={containerRef} />
-        </motion.div>
       </div>
     </div>
   );

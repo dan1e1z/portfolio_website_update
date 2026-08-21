@@ -50,7 +50,7 @@
   }
   * { @apply border-border; }
   html { scroll-behavior: smooth; }
-  body { @apply bg-background text-foreground antialiased; font-family: "Neue Montreal", ui-sans-serif, system-ui, sans-serif; }
+  body { @apply bg-background text-foreground antialiased; font-family: ui-sans-serif, system-ui, sans-serif; }
   button, a { @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background; }
   ::selection { background: rgba(238, 233, 204, 0.25); }
 }
